@@ -30,6 +30,7 @@ class Gateway:
         self.token_limit = token_limit
         self.usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
         self.calls = 0
+        self.transport_events = []
 
     def request(self, method, path, payload=None):
         data = None if payload is None else json.dumps(payload).encode("utf-8")
@@ -37,15 +38,21 @@ class Gateway:
             BASE_URL + path, data=data, method=method,
             headers={"Authorization": "Bearer " + api_key(), "Content-Type": "application/json"},
         )
-        # No automatic retry: an uncertain completion must not be silently resampled.
-        try:
-            with urllib.request.urlopen(req, timeout=120) as response:
-                return json.load(response)
-        except urllib.error.HTTPError as exc:
-            body = exc.read().decode("utf-8", errors="replace").replace(api_key(), "[REDACTED]")
-            raise RuntimeError(f"Gateway HTTP {exc.code}: {body[:800]}") from None
-        except (urllib.error.URLError, TimeoutError, ConnectionError):
-            raise RuntimeError("Gateway network/timeout failure; no automatic retry was made.") from None
+        for attempt in range(4):
+            try:
+                with urllib.request.urlopen(req, timeout=120) as response:
+                    return json.load(response)
+            except urllib.error.HTTPError as exc:
+                body = exc.read().decode("utf-8", errors="replace").replace(api_key(), "[REDACTED]")
+                error = f"Gateway HTTP {exc.code}: {body[:800]}"
+                retryable = exc.code in (429, 500, 502, 503, 504)
+            except (urllib.error.URLError, TimeoutError, ConnectionError) as exc:
+                error = "Gateway network/timeout failure: " + type(exc).__name__
+                retryable = True
+            self.transport_events.append({"path": path, "attempt": attempt + 1, "error": error, "time": time.time()})
+            if not retryable or attempt == 3:
+                raise RuntimeError(error + " (attempt recorded)") from None
+            time.sleep(2 ** (attempt + 1))
 
     def chat(self, messages, tools=None, **extra):
         if self.usage["total_tokens"] >= self.token_limit:
@@ -58,6 +65,7 @@ class Gateway:
             payload.update(tools=tools, tool_choice="auto")
         payload.update(extra)
         started = time.monotonic()
+        retry_start = len(self.transport_events)
         result = self.request("POST", "/chat/completions", payload)
         self.calls += 1
         usage = result.get("usage", {})
@@ -69,6 +77,7 @@ class Gateway:
             "system_fingerprint": result.get("system_fingerprint"),
             "finish_reason": choice.get("finish_reason"), "usage": usage,
             "elapsed_seconds": round(time.monotonic() - started, 3),
+            "transport_events": self.transport_events[retry_start:],
         }
 
     def embed(self, texts):

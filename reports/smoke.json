@@ -1,0 +1,35 @@
+{
+  "rows": [
+    {
+      "id": "multi_turn_base_10",
+      "success": true,
+      "caps": [],
+      "memories": 3
+    },
+    {
+      "id": "multi_turn_base_64",
+      "success": true,
+      "caps": [],
+      "memories": 3
+    },
+    {
+      "id": "multi_turn_base_105",
+      "success": true,
+      "caps": [],
+      "memories": 3
+    },
+    {
+      "id": "multi_turn_base_156",
+      "success": true,
+      "caps": [],
+      "memories": 3
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 224734,
+    "completion_tokens": 8454,
+    "total_tokens": 233188
+  },
+  "api_calls": 63,
+  "model": "MiniMax-M2.7-bf16"
+}

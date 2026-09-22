@@ -90,14 +90,14 @@ def run_sequence(job, manifest, study="A", model=None):
                     bank.add(items)
                     save(folder / f"memory_{position:03d}.json", {"items": items, "generation": generation, "bank": bank.items})
                 save(folder / "progress.json", {"completed": len(rows), "total": sum(len(x) for x in [manifest["orders"][job["order"]], manifest["splits"]["evaluation"]]), "usage": client.usage, "updated": now()})
-        summary = {**job, "study": study, "model": client.model, "rows": rows, "usage": client.usage, "api_calls": client.calls, "memory_items": len(bank.items), "manifest_hash": digest(manifest), "finished": now()}
+        summary = {**job, "study": study, "model": client.model, "rows": rows, "usage": client.usage, "api_calls": client.calls, "transport_events": client.transport_events, "memory_items": len(bank.items), "manifest_hash": digest(manifest), "finished": now()}
         for phase in ("evolution", "evaluation"):
             selected = [r for r in rows if r["phase"] == phase]
             summary[phase + "_success"] = sum(r["success"] for r in selected) / len(selected)
         save(folder / "summary.json", summary)
         return summary
     except Exception as exc:
-        save(folder / "failure.json", {"error": str(exc), "type": type(exc).__name__, "completed": len(rows), "usage": client.usage, "when": now()})
+        save(folder / "failure.json", {"error": str(exc), "type": type(exc).__name__, "completed": len(rows), "usage": client.usage, "transport_events": client.transport_events, "when": now()})
         raise
 
 
@@ -122,9 +122,9 @@ def run_matrix(manifest, workers, study="A", model=None, reps=None):
         raise RuntimeError(f"{len(failures)} incomplete runs; see execution.json")
 
 
-def smoke(manifest):
+def smoke(manifest, model=None):
     tasks, gold = dataset()
-    client = client_for(manifest)
+    client = client_for(manifest, model)
     bank = ReasoningMemory(client)
     rows = []
     # Development-only tasks from separate domains; no evolution/heldout outcomes used to tune.
@@ -155,6 +155,6 @@ if __name__ == "__main__":
     if args.command == "prepare":
         print(json.dumps({k: len(v) for k, v in manifest["splits"].items()}))
     elif args.command == "smoke":
-        smoke(manifest)
+        smoke(manifest, args.model)
     else:
         run_matrix(manifest, args.workers, args.study, args.model, args.reps)

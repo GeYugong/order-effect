@@ -1,14 +1,14 @@
 {
   "state": "running",
   "stage": "A",
-  "updated": "2026-09-22T08:17:43.045423+00:00",
-  "pid": 46868,
+  "updated": "2026-09-22T08:29:16.309123+00:00",
+  "pid": 34636,
   "model": "deepseek-flash",
   "studies": {
     "A": {
       "complete_runs": 0,
       "expected_runs": 40,
-      "completed_tasks": 104,
+      "completed_tasks": 133,
       "expected_tasks": 2000,
       "runs_with_prior_failure": 0
     },

@@ -1,0 +1,21 @@
+{
+  "note": "Entire batches excluded for infrastructure/simulator-isolation reasons before complete main runs; not selected by task outcomes. Raw traces retained locally. Token counts from failure records may be incomplete.",
+  "batches": [
+    {
+      "batch": "A_before_rate_limit",
+      "started_runs": 40,
+      "complete_runs": 0,
+      "completed_tasks": 0,
+      "reported_failure_usage_total_tokens": 228839,
+      "included_in_main_analysis": false
+    },
+    {
+      "batch": "A_before_simulator_lock",
+      "started_runs": 16,
+      "complete_runs": 0,
+      "completed_tasks": 362,
+      "reported_failure_usage_total_tokens": 0,
+      "included_in_main_analysis": false
+    }
+  ]
+}

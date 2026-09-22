@@ -1,0 +1,207 @@
+{
+  "created": "2026-09-22T08:37:12.371327+00:00",
+  "rows": [
+    {
+      "run": "no_memory_ordinal_r2",
+      "method": "no_memory",
+      "order": "ordinal",
+      "phase": "evolution",
+      "n": 30,
+      "success": 25
+    },
+    {
+      "run": "no_memory_ordinal_r2",
+      "method": "no_memory",
+      "order": "ordinal",
+      "phase": "evaluation",
+      "n": 5,
+      "success": 5
+    },
+    {
+      "run": "no_memory_ordinal_r3",
+      "method": "no_memory",
+      "order": "ordinal",
+      "phase": "evolution",
+      "n": 30,
+      "success": 21
+    },
+    {
+      "run": "no_memory_ordinal_r3",
+      "method": "no_memory",
+      "order": "ordinal",
+      "phase": "evaluation",
+      "n": 6,
+      "success": 5
+    },
+    {
+      "run": "no_memory_reverse_r0",
+      "method": "no_memory",
+      "order": "reverse",
+      "phase": "evolution",
+      "n": 30,
+      "success": 25
+    },
+    {
+      "run": "no_memory_reverse_r0",
+      "method": "no_memory",
+      "order": "reverse",
+      "phase": "evaluation",
+      "n": 8,
+      "success": 8
+    },
+    {
+      "run": "no_memory_reverse_r2",
+      "method": "no_memory",
+      "order": "reverse",
+      "phase": "evolution",
+      "n": 30,
+      "success": 23
+    },
+    {
+      "run": "no_memory_reverse_r2",
+      "method": "no_memory",
+      "order": "reverse",
+      "phase": "evaluation",
+      "n": 3,
+      "success": 3
+    },
+    {
+      "run": "no_memory_reverse_r3",
+      "method": "no_memory",
+      "order": "reverse",
+      "phase": "evolution",
+      "n": 30,
+      "success": 25
+    },
+    {
+      "run": "no_memory_reverse_r3",
+      "method": "no_memory",
+      "order": "reverse",
+      "phase": "evaluation",
+      "n": 8,
+      "success": 6
+    },
+    {
+      "run": "no_memory_reverse_r4",
+      "method": "no_memory",
+      "order": "reverse",
+      "phase": "evolution",
+      "n": 30,
+      "success": 23
+    },
+    {
+      "run": "no_memory_reverse_r4",
+      "method": "no_memory",
+      "order": "reverse",
+      "phase": "evaluation",
+      "n": 7,
+      "success": 6
+    },
+    {
+      "run": "no_memory_shuffle1_r4",
+      "method": "no_memory",
+      "order": "shuffle1",
+      "phase": "evolution",
+      "n": 30,
+      "success": 22
+    },
+    {
+      "run": "no_memory_shuffle1_r4",
+      "method": "no_memory",
+      "order": "shuffle1",
+      "phase": "evaluation",
+      "n": 7,
+      "success": 5
+    },
+    {
+      "run": "no_memory_shuffle2_r4",
+      "method": "no_memory",
+      "order": "shuffle2",
+      "phase": "evolution",
+      "n": 30,
+      "success": 23
+    },
+    {
+      "run": "no_memory_shuffle2_r4",
+      "method": "no_memory",
+      "order": "shuffle2",
+      "phase": "evaluation",
+      "n": 6,
+      "success": 6
+    },
+    {
+      "run": "reasoning_memory_ordinal_r1",
+      "method": "reasoning_memory",
+      "order": "ordinal",
+      "phase": "evolution",
+      "n": 21,
+      "success": 15
+    },
+    {
+      "run": "reasoning_memory_reverse_r0",
+      "method": "reasoning_memory",
+      "order": "reverse",
+      "phase": "evolution",
+      "n": 20,
+      "success": 13
+    },
+    {
+      "run": "reasoning_memory_reverse_r3",
+      "method": "reasoning_memory",
+      "order": "reverse",
+      "phase": "evolution",
+      "n": 19,
+      "success": 12
+    },
+    {
+      "run": "reasoning_memory_reverse_r4",
+      "method": "reasoning_memory",
+      "order": "reverse",
+      "phase": "evolution",
+      "n": 19,
+      "success": 13
+    },
+    {
+      "run": "reasoning_memory_shuffle1_r2",
+      "method": "reasoning_memory",
+      "order": "shuffle1",
+      "phase": "evolution",
+      "n": 19,
+      "success": 17
+    },
+    {
+      "run": "reasoning_memory_shuffle2_r2",
+      "method": "reasoning_memory",
+      "order": "shuffle2",
+      "phase": "evolution",
+      "n": 19,
+      "success": 13
+    },
+    {
+      "run": "reasoning_memory_shuffle2_r3",
+      "method": "reasoning_memory",
+      "order": "shuffle2",
+      "phase": "evolution",
+      "n": 20,
+      "success": 13
+    },
+    {
+      "run": "reasoning_memory_shuffle2_r4",
+      "method": "reasoning_memory",
+      "order": "shuffle2",
+      "phase": "evolution",
+      "n": 18,
+      "success": 12
+    }
+  ],
+  "errors": {
+    "multi_turn:instance_state_mismatch": 91,
+    "multi_turn:empty_turn_model_response": 7,
+    "multi_turn:execution_response_mismatch": 8
+  },
+  "caps": {
+    "output_token_limit": 1,
+    "step_limit": 2
+  },
+  "interpretation": "Descriptive incomplete snapshot only; no causal comparison or interim significance test"
+}

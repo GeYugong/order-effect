@@ -2,13 +2,22 @@
   "rows": [
     {
       "id": "multi_turn_base_10",
-      "success": true,
-      "caps": [],
+      "success": false,
+      "caps": [
+        {
+          "turn": 2,
+          "reason": "output_token_limit"
+        },
+        {
+          "turn": 3,
+          "reason": "output_token_limit"
+        }
+      ],
       "memories": 3
     },
     {
       "id": "multi_turn_base_64",
-      "success": true,
+      "success": false,
       "caps": [],
       "memories": 3
     },
@@ -26,10 +35,11 @@
     }
   ],
   "usage": {
-    "prompt_tokens": 224734,
-    "completion_tokens": 8454,
-    "total_tokens": 233188
+    "prompt_tokens": 426053,
+    "completion_tokens": 39781,
+    "total_tokens": 465834
   },
-  "api_calls": 63,
-  "model": "MiniMax-M2.7-bf16"
+  "api_calls": 66,
+  "model": "deepseek-flash",
+  "transport_events": []
 }

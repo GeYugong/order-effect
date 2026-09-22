@@ -12,12 +12,15 @@ from study import build_manifest, client_for
 def prepare_pool(manifest):
     dest = ROOT / "results/B/frozen_pool.json"
     if dest.exists():
-        return json.loads(dest.read_text(encoding="utf-8"))
+        pool = json.loads(dest.read_text(encoding="utf-8"))
+        if "canonical_contexts" in pool:
+            return pool
     source = ROOT / "results/A/no_memory_ordinal_r0"
     if not (source / "summary.json").exists():
         raise RuntimeError("The prespecified no-memory ordinal r0 source run must finish first")
     tasks, _ = dataset()
     client = client_for(manifest)
+    client.set_ledger(ROOT / "results/B/pool_usage.jsonl")
     experiences = {}
     for position, task_id in enumerate(manifest["orders"]["ordinal"]):
         intermediate = ROOT / "results/B/pool_items" / (task_id + ".json")
@@ -29,7 +32,13 @@ def prepare_pool(manifest):
             record = {"items": items, "generation": generation, "source_trajectory_hash": digest(observed)}
             save(intermediate, record)
         experiences[task_id] = record["items"]
-    pool = {"experiences": experiences, "pool_hash": digest(experiences), "source": "A/no_memory_ordinal_r0", "created": now(), "usage": client.usage, "transport_events": client.transport_events}
+    pool = {"experiences": experiences, "pool_hash": digest(experiences), "source": "A/no_memory_ordinal_r0", "created": now()}
+    canonical = sorted([x for values in experiences.values() for x in values], key=lambda x: x["id"])
+    bank = ReasoningMemory(client)
+    bank.add(canonical)
+    pool["canonical_memory"] = canonical
+    pool["canonical_contexts"] = {key: bank.retrieve(tasks[key]["question"][0][0]["content"])[0] for key in manifest["splits"]["evaluation"]}
+    pool.update(usage=client.usage, transport_events=client.transport_events)
     save(dest, pool)
     return pool
 
@@ -38,34 +47,44 @@ def replay_job(job, manifest, pool):
     folder = ROOT / "results/B" / f"{job['method']}_{job['order']}_r{job['rep']}"
     if (folder / "summary.json").exists():
         return json.loads((folder / "summary.json").read_text(encoding="utf-8"))
-    if (folder / "started.json").exists():
-        raise RuntimeError("Incomplete replay run; inspect failure before explicit retry")
     tasks, gold = dataset()
     client = client_for(manifest)
-    save(folder / "started.json", {"job": job, "pool_hash": pool["pool_hash"], "manifest_hash": digest(manifest), "started": now()})
+    client.set_ledger(folder / "usage.jsonl")
+    if (folder / "started.json").exists():
+        previous = json.loads((folder / "started.json").read_text(encoding="utf-8"))
+        if previous["pool_hash"] != pool["pool_hash"] or previous["manifest_hash"] != digest(manifest):
+            raise RuntimeError("Replay checkpoint configuration mismatch")
+    else:
+        save(folder / "started.json", {"job": job, "pool_hash": pool["pool_hash"], "manifest_hash": digest(manifest), "started": now()})
     rows = []
     try:
         rules = []
         if job["method"] == "merge":
             for position, task_id in enumerate(manifest["orders"][job["order"]]):
-                before = rules
-                rules, generation = merge(rules, pool["experiences"][task_id], client)
-                save(folder / f"merge_{position:03d}.json", {"task_id": task_id, "before": before, "after": rules, "generation": generation})
+                record_path = folder / f"merge_{position:03d}.json"
+                if record_path.exists():
+                    rules = json.loads(record_path.read_text(encoding="utf-8"))["after"]
+                else:
+                    before = rules
+                    rules, generation = merge(rules, pool["experiences"][task_id], client)
+                    save(record_path, {"task_id": task_id, "before": before, "after": rules, "generation": generation})
                 save(folder / "progress.json", {"stage": "merge", "completed": position + 1, "usage": client.usage, "updated": now()})
             final_memory = rules
             text = "\n".join(rule["content"] for rule in rules)
             contexts = {key: text for key in manifest["splits"]["evaluation"]}
         else:
             # Canonical reference sees precisely the same pool, independent of arrival order.
-            final_memory = sorted([x for v in pool["experiences"].values() for x in v], key=lambda x: x["id"])
-            bank = ReasoningMemory(client)
-            bank.add(final_memory)
-            contexts = {key: bank.retrieve(tasks[key]["question"][0][0]["content"])[0] for key in manifest["splits"]["evaluation"]}
+            final_memory = pool["canonical_memory"]
+            contexts = pool["canonical_contexts"]
         save(folder / "final_memory.json", {"memory": final_memory, "hash": digest(final_memory), "contexts_hash": digest(contexts)})
         for eval_rep in range(manifest["replay_evaluation_repetitions"]):
             for position, key in enumerate(manifest["splits"]["evaluation"]):
-                result = run_task(tasks[key], gold[key], client, contexts[key], manifest["max_steps_per_turn"], event_sink(folder / "api_trace.jsonl", key))
-                save(folder / f"eval{eval_rep}_{position:03d}.json", result)
+                result_path = folder / f"eval{eval_rep}_{position:03d}.json"
+                if result_path.exists():
+                    result = json.loads(result_path.read_text(encoding="utf-8"))
+                else:
+                    result = run_task(tasks[key], gold[key], client, contexts[key], manifest["max_steps_per_turn"], event_sink(folder / "api_trace.jsonl", key), folder / f"checkpoint_eval{eval_rep}_{position:03d}.json")
+                    save(result_path, result)
                 rows.append({"task_id": key, "eval_rep": eval_rep, "success": result["success"], "caps": len(result["caps"])})
                 save(folder / "progress.json", {"stage": "evaluation", "completed": len(rows), "total": 60, "usage": client.usage, "updated": now()})
         summary = {**job, "study": "B", "model": client.model, "rows": rows, "evaluation_success": sum(x["success"] for x in rows) / len(rows), "usage": client.usage, "api_calls": client.calls, "transport_events": client.transport_events, "pool_hash": pool["pool_hash"], "memory_hash": digest(final_memory), "contexts_hash": digest(contexts), "finished": now()}

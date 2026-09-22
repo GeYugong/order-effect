@@ -1,0 +1,28 @@
+{
+  "rules": [
+    {
+      "content": "The mv command does not allow paths in the destination parameter. When combining a move operation with a rename, perform it in two steps: first move the file to the target directory with mv source.txt DestDir, then navigate into that directory and rename it with mv source.txt new_name.txt.",
+      "sources": [
+        "multi_turn_base_10"
+      ]
+    },
+    {
+      "content": "The echo command requires the target file to already exist. When creating a file with specific content, first use touch to create an empty file, then use echo with the content parameter to write to it. Attempting echo content file.txt on a non-existent file returns 'cannot write to file: No such file' error.",
+      "sources": [
+        "multi_turn_base_10"
+      ]
+    },
+    {
+      "content": "The diff command may return empty output even when files have different content, particularly when comparing files with content versus empty files. When diff returns no output, use the cat command on both files to verify actual contents rather than assuming they are identical.",
+      "sources": [
+        "multi_turn_base_10"
+      ]
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 563,
+    "completion_tokens": 421,
+    "total_tokens": 984
+  },
+  "finish_reason": "stop"
+}

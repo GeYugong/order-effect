@@ -1,0 +1,36 @@
+{
+  "rows": [
+    {
+      "id": "multi_turn_base_10",
+      "success": true,
+      "caps": [],
+      "memories": 3
+    },
+    {
+      "id": "multi_turn_base_64",
+      "success": false,
+      "caps": [],
+      "memories": 3
+    },
+    {
+      "id": "multi_turn_base_105",
+      "success": false,
+      "caps": [],
+      "memories": 3
+    },
+    {
+      "id": "multi_turn_base_156",
+      "success": true,
+      "caps": [],
+      "memories": 3
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 156201,
+    "completion_tokens": 11974,
+    "total_tokens": 168175
+  },
+  "api_calls": 33,
+  "model": "deepseek-flash",
+  "transport_events": []
+}

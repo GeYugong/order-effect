@@ -1,0 +1,46 @@
+{
+  "rules": [
+    {
+      "content": "Before creating, moving, or writing files, run pwd and ls to confirm the current directory and find target folders. After any cd, verify the new current directory before mutating files.",
+      "sources": [
+        "multi_turn_base_10"
+      ]
+    },
+    {
+      "content": "Navigate one level at a time: use cd with a single folder name only. Do not pass multi-level paths, since tools may reject path arguments.",
+      "sources": [
+        "multi_turn_base_10"
+      ]
+    },
+    {
+      "content": "For path-restricted mv, destination must be a local name, not a path. To move into a subdirectory and rename: mv source existingDir; cd existingDir; mv originalRename newName. Do not use dir/newName. Verify with ls after each step.",
+      "sources": [
+        "multi_turn_base_10"
+      ]
+    },
+    {
+      "content": "If writing fails with 'No such file', create the file first with touch, then write.",
+      "sources": [
+        "multi_turn_base_10"
+      ]
+    },
+    {
+      "content": "After writing, verify contents with cat and wc (characters/lines/words). Cross-check tool outputs before concluding success.",
+      "sources": [
+        "multi_turn_base_10"
+      ]
+    },
+    {
+      "content": "Treat empty diff output cautiously: comparing an empty file and a non-empty file may still yield no lines. Inspect actual contents with cat/wc before concluding files match or differ.",
+      "sources": [
+        "multi_turn_base_10"
+      ]
+    }
+  ],
+  "update_valid": true,
+  "usage": {
+    "prompt_tokens": 618,
+    "completion_tokens": 1670,
+    "total_tokens": 2288
+  }
+}

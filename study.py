@@ -7,10 +7,10 @@ import random
 import traceback
 
 from benchmark import ROOT, dataset
-from experiment import ReasoningMemory, digest, event_sink, extract, merge, now, run_task, save
+from experiment import ReasoningMemory, digest, event_sink, extract, memory_text, merge, now, run_task, save
 from gateway import Gateway
 
-MODEL = "MiniMax-M2.7-bf16"
+MODEL = "deepseek-flash"
 
 
 def build_manifest():
@@ -43,8 +43,8 @@ def build_manifest():
         random.Random(seed).shuffle(order)
         orders[f"shuffle{i}"] = order
     manifest = {
-        "created_utc": now(), "model": MODEL, "embedding_model": "Qwen3-Embedding-8B",
-        "temperature": 0.7, "max_tokens": 4096, "max_steps_per_turn": 12,
+        "created_utc": now(), "model": MODEL, "embedding_model": "BAAI/bge-base-en-v1.5",
+        "temperature": None, "thinking": "enabled", "reasoning_effort": "low", "max_tokens": 8192, "max_steps_per_turn": 12,
         "repetitions": 5, "split_seed": 20260922, "order_seeds": [1729, 2718],
         "schedule_seed": 8675309, "splits": splits, "orders": orders,
         "methods": ["no_memory", "reasoning_memory"], "replay_methods": ["merge", "canonical_all"],
@@ -60,7 +60,9 @@ def build_manifest():
 
 
 def client_for(manifest, model=None):
-    return Gateway(model or manifest["model"], manifest["temperature"], manifest["max_tokens"], token_limit=8000000)
+    client = Gateway(model or manifest["model"], manifest["temperature"], manifest["max_tokens"], token_limit=50000000)
+    client.reasoning_effort = manifest.get("reasoning_effort", "low")
+    return client
 
 
 def run_sequence(job, manifest, study="A", model=None):
@@ -68,27 +70,49 @@ def run_sequence(job, manifest, study="A", model=None):
     folder = ROOT / "results" / study / name
     if (folder / "summary.json").exists():
         return json.loads((folder / "summary.json").read_text(encoding="utf-8"))
-    if (folder / "started.json").exists():
-        raise RuntimeError(f"Incomplete run {name}; inspect failure before explicitly retrying, no silent resampling.")
     tasks, gold = dataset()
     client = client_for(manifest, model)
+    client.set_ledger(folder / "usage.jsonl")
     bank = ReasoningMemory(client)
     rows = []
-    save(folder / "started.json", {"job": job, "manifest_hash": digest(manifest), "started": now(), "model": client.model})
+    if (folder / "started.json").exists():
+        previous = json.loads((folder / "started.json").read_text(encoding="utf-8"))
+        if previous["manifest_hash"] != digest(manifest) or previous["model"] != client.model:
+            raise RuntimeError("Run checkpoint configuration mismatch")
+    else:
+        save(folder / "started.json", {"job": job, "manifest_hash": digest(manifest), "started": now(), "model": client.model})
     try:
         for phase, ids in [("evolution", manifest["orders"][job["order"]]), ("evaluation", manifest["splits"]["evaluation"])]:
             for position, task_id in enumerate(ids):
                 task = tasks[task_id]
-                context, retrieved = bank.retrieve(task["question"][0][0]["content"]) if job["method"] == "reasoning_memory" else ("", [])
-                # Each task gets a fresh simulator; the bank alone crosses task boundaries.
-                result = run_task(task, gold[task_id], client, context, manifest["max_steps_per_turn"], event_sink(folder / "api_trace.jsonl", task_id))
-                result.update(phase=phase, position=position, retrieved=retrieved)
-                save(folder / f"{phase}_{position:03d}.json", result)
+                result_path = folder / f"{phase}_{position:03d}.json"
+                if result_path.exists():
+                    result = json.loads(result_path.read_text(encoding="utf-8"))
+                else:
+                    context_path = folder / f"context_{phase}_{position:03d}.json"
+                    if context_path.exists():
+                        cached = json.loads(context_path.read_text(encoding="utf-8"))
+                        context, retrieved = cached["text"], cached["retrieved"]
+                    else:
+                        context, retrieved = bank.retrieve(task["question"][0][0]["content"]) if job["method"] == "reasoning_memory" else ("", [])
+                        save(context_path, {"text": context, "retrieved": retrieved})
+                    result = run_task(task, gold[task_id], client, context, manifest["max_steps_per_turn"], event_sink(folder / "api_trace.jsonl", task_id), folder / f"checkpoint_{phase}_{position:03d}.json")
+                    result.update(phase=phase, position=position, retrieved=retrieved)
+                    save(result_path, result)
                 rows.append({"task_id": task_id, "phase": phase, "success": result["success"], "caps": len(result["caps"])})
                 if phase == "evolution" and job["method"] == "reasoning_memory":
-                    items, generation = extract(task, result, client)
-                    bank.add(items)
-                    save(folder / f"memory_{position:03d}.json", {"items": items, "generation": generation, "bank": bank.items})
+                    memory_path = folder / f"memory_{position:03d}.json"
+                    if memory_path.exists():
+                        record = json.loads(memory_path.read_text(encoding="utf-8"))
+                    else:
+                        items, generation = extract(task, result, client)
+                        record = {"items": items, "generation": generation}
+                        save(memory_path, record)
+                    if "vectors" not in record:
+                        record["vectors"] = client.embed([memory_text(x) for x in record["items"]]) if record["items"] else []
+                        save(memory_path, record)
+                    bank.items.extend(record["items"])
+                    bank.vectors.extend(record["vectors"])
                 save(folder / "progress.json", {"completed": len(rows), "total": sum(len(x) for x in [manifest["orders"][job["order"]], manifest["splits"]["evaluation"]]), "usage": client.usage, "updated": now()})
         summary = {**job, "study": study, "model": client.model, "rows": rows, "usage": client.usage, "api_calls": client.calls, "transport_events": client.transport_events, "memory_items": len(bank.items), "manifest_hash": digest(manifest), "finished": now()}
         for phase in ("evolution", "evaluation"):
@@ -126,20 +150,25 @@ def smoke(manifest, model=None):
     tasks, gold = dataset()
     client = client_for(manifest, model)
     bank = ReasoningMemory(client)
+    folder = ROOT / "results" / ("smoke_" + client.model + "_" + client.reasoning_effort)
     rows = []
     # Development-only tasks from separate domains; no evolution/heldout outcomes used to tune.
     for idx in [0, 4, 8, 12]:
         key = manifest["splits"]["development"][idx]
         context, retrieved = bank.retrieve(tasks[key]["question"][0][0]["content"])
-        result = run_task(tasks[key], gold[key], client, context, manifest["max_steps_per_turn"], event_sink(ROOT / "results/smoke/api_trace.jsonl", key))
-        save(ROOT / "results/smoke" / (key + ".json"), result)
+        result_path = folder / (key + ".json")
+        if result_path.exists():
+            result = json.loads(result_path.read_text(encoding="utf-8"))
+        else:
+            result = run_task(tasks[key], gold[key], client, context, manifest["max_steps_per_turn"], event_sink(folder / "api_trace.jsonl", key))
+            save(result_path, result)
         items, generation = extract(tasks[key], result, client)
         bank.add(items)
-        save(ROOT / "results/smoke" / (key + "_memory.json"), {"items": items, "generation": generation})
+        save(folder / (key + "_memory.json"), {"items": items, "generation": generation})
         rows.append({"id": key, "success": result["success"], "caps": result["caps"], "memories": len(items)})
         print(json.dumps(rows[-1]), flush=True)
-    summary = {"rows": rows, "usage": client.usage, "api_calls": client.calls, "model": client.model}
-    save(ROOT / "reports/smoke.json", summary)
+    summary = {"rows": rows, "usage": client.usage, "api_calls": client.calls, "model": client.model, "transport_events": client.transport_events}
+    save(ROOT / "reports" / ("smoke_" + client.model + "_" + client.reasoning_effort + ".json"), summary)
     print(json.dumps(summary), flush=True)
 
 

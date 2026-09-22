@@ -1,9 +1,9 @@
 {
   "created_utc": "2026-09-22T07:41:05.532149+00:00",
-  "model": "MiniMax-M2.7-bf16",
-  "embedding_model": "Qwen3-Embedding-8B",
-  "temperature": 0.7,
-  "max_tokens": 4096,
+  "model": "deepseek-flash",
+  "embedding_model": "BAAI/bge-base-en-v1.5",
+  "temperature": null,
+  "max_tokens": 8192,
   "max_steps_per_turn": 12,
   "repetitions": 5,
   "split_seed": 20260922,
@@ -362,5 +362,9 @@
   "primary_contrast": "mean(shuffle1,shuffle2) minus ordinal; reasoning_memory minus no_memory",
   "generation_seed": "not supplied: endpoint seed determinism is not assumed",
   "source": "6ea57973c7a6097fd7c5915698c54c17c5b1b6c8",
-  "split_note": "One example per identical sorted path group; stratified by four official 50-task domain blocks. Not an official BFCL split."
+  "split_note": "One example per identical sorted path group; stratified by four official 50-task domain blocks. Not an official BFCL split.",
+  "thinking": "enabled",
+  "reasoning_effort": "low",
+  "amendment": "User chose Flash; high-effort development runs hit output caps. Low effort validated on development only. Local encoder replaces unreliable campus embedding API before complete main runs.",
+  "embedding_backend": "local CPU ONNX; model files hash locked"
 }

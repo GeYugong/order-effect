@@ -1,0 +1,15 @@
+{
+  "model": "BAAI/bge-base-en-v1.5",
+  "dimensions": 768,
+  "threads": 2,
+  "backend": "fastembed CPU ONNX",
+  "sha256": {
+    "models--qdrant--bge-base-en-v1.5-onnx-q\\files_metadata.json": "6ded81c6cb2c03dd978ed0587d6ca77b3c8d95a6f3838f07eb510bbd86cbe5e0",
+    "models--qdrant--bge-base-en-v1.5-onnx-q\\snapshots\\738cad1c108e2f23649db9e44b2eab988626493b\\config.json": "86f84a5285de7f1ee673f712387219ef1e261ec27dcd870e793a80f9da1aaa3b",
+    "models--qdrant--bge-base-en-v1.5-onnx-q\\snapshots\\738cad1c108e2f23649db9e44b2eab988626493b\\model_optimized.onnx": "4e556722bc4f65716c544c8a931f1e90fb3f866e5741fd93a96f051d673339c7",
+    "models--qdrant--bge-base-en-v1.5-onnx-q\\snapshots\\738cad1c108e2f23649db9e44b2eab988626493b\\special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+    "models--qdrant--bge-base-en-v1.5-onnx-q\\snapshots\\738cad1c108e2f23649db9e44b2eab988626493b\\tokenizer.json": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66",
+    "models--qdrant--bge-base-en-v1.5-onnx-q\\snapshots\\738cad1c108e2f23649db9e44b2eab988626493b\\tokenizer_config.json": "0b29c7bfc889e53b36d9dd3e686dd4300f6525110eaa98c76a5dafceb2029f53",
+    "models--qdrant--bge-base-en-v1.5-onnx-q\\trees\\738cad1c108e2f23649db9e44b2eab988626493b.json": "b1e8e1b0914fb07ee46955f5de92c88f4e3f65a374d287b48ecb3c43fcdc8972"
+  }
+}

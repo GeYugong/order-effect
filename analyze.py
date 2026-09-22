@@ -100,7 +100,7 @@ def plot(study, rows):
 
 
 def report(results):
-    text = ["# 顺序效应实验报告", "", "本报告基于实际完成的运行。主实验使用 MiniMax-M2.7-bf16；数据是 BFCL 的自定义跨任务划分，非原榜单评测。", ""]
+    text = ["# 顺序效应实验报告", "", "本报告基于实际完成的运行。主实验使用 deepseek-flash（thinking enabled，effort low）；数据是 BFCL 的自定义跨任务划分，非原榜单评测。", ""]
     for result in results:
         study = result["study"]
         text.extend([f"## 实验 {study}", "", f"完整运行：{result['complete_runs']}；未完成运行：{len(result['failed_runs'])}；已完成运行返回的总词元：{result['usage_complete_runs']['total_tokens']:,}；服务重试事件：{result['transport_errors']}。", "", "| 方法 | 顺序 | 独立运行数 | 测试成功率均值 | 运行间标准差 |", "|---|---|---:|---:|---:|"])

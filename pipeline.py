@@ -91,7 +91,50 @@ def run_stage(stage, args):
     raise RuntimeError(f"Stage {stage} failed after 3 checkpoint resumes. Inspect {logfile.name}.")
 
 
-def main(workers):
+def await_preflight(pid):
+    """Wait for the already-running development validation; never run paid fallbacks."""
+    import ctypes
+    kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+    kernel.OpenProcess.argtypes = [ctypes.c_ulong, ctypes.c_int, ctypes.c_ulong]
+    kernel.OpenProcess.restype = ctypes.c_void_p
+    kernel.WaitForSingleObject.argtypes = [ctypes.c_void_p, ctypes.c_ulong]
+    kernel.CloseHandle.argtypes = [ctypes.c_void_p]
+    handle = kernel.OpenProcess(0x00100000, False, pid)
+    try:
+        while handle and kernel.WaitForSingleObject(handle, 0) == 258:
+            progress(stage="development validation")
+            if (ROOT / "results/STOP").exists():
+                subprocess.run(["taskkill", "/PID", str(pid), "/T", "/F"], capture_output=True)
+                raise InterruptedError("STOP marker during development validation")
+            time.sleep(15)
+    finally:
+        if handle:
+            kernel.CloseHandle(handle)
+    manifest = build_manifest()
+    report_path = ROOT / "reports" / f"smoke_{manifest['model']}_{manifest['reasoning_effort']}.json"
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    expected = [manifest["splits"]["development"][i] for i in (0, 4, 8, 12)]
+    if report["model"] != manifest["model"] or [r["id"] for r in report["rows"]] != expected:
+        raise RuntimeError("Development validation report does not match campus configuration")
+    # Success rates do not gate selection; only the interface and valid memory generation do.
+    if not any(r["memories"] for r in report["rows"]):
+        raise RuntimeError("No valid development memory generated; inspect compatibility")
+    from experiment import merge
+    from study import client_for
+    development = ROOT / "results" / f"smoke_{manifest['model']}_{manifest['reasoning_effort']}"
+    items = []
+    for task_id in expected:
+        record = json.loads((development / f"{task_id}_memory.json").read_text(encoding="utf-8"))
+        items.extend(record["items"])
+    client = client_for(manifest)
+    client.set_ledger(ROOT / "results/development_merge_usage.jsonl")
+    rules, generation = merge([], items[:3], client)
+    save(ROOT / "reports/campus_merge_validation.json", {"model": client.model, "rules": rules, "generation": generation})
+    if not generation.get("update_valid") or not rules:
+        raise RuntimeError("Campus development merge interface validation failed")
+
+
+def main(workers, preflight_pid=None):
     (ROOT/"results").mkdir(exist_ok=True)
     with FileLock(str(ROOT/"results/pipeline.lock"), timeout=0):
         save(ROOT/"results/pipeline_pid.json", {"pid": os.getpid(), "started": now()})
@@ -104,6 +147,8 @@ def main(workers):
             seal()
             subprocess.run([sys.executable, "-X", "utf8", "embedding.py"], cwd=ROOT, check=True)
             subprocess.run([sys.executable, "-X", "utf8", "-m", "unittest", "discover", "-s", "tests", "-v"], cwd=ROOT, check=True)
+            if preflight_pid:
+                await_preflight(preflight_pid)
             for stage, args in [("A", ["study.py", "run", "--workers", str(workers)]), ("B", ["replay.py", "--workers", str(workers)])]:
                 run_stage(stage, args)
                 subprocess.run([sys.executable, "-X", "utf8", "analyze.py"], cwd=ROOT, check=True)
@@ -127,7 +172,8 @@ def main(workers):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--workers", type=int, default=16)
+    parser.add_argument("--workers", type=int, default=4)
+    parser.add_argument("--preflight-pid", type=int)
     parser.add_argument("--seal", action="store_true")
     parser.add_argument("--status", action="store_true")
     args = parser.parse_args()
@@ -136,4 +182,4 @@ if __name__ == "__main__":
     elif args.status:
         print((ROOT/"reports/progress.json").read_text(encoding="utf-8") if (ROOT/"reports/progress.json").exists() else "Not started")
     else:
-        main(args.workers)
+        main(args.workers, args.preflight_pid)

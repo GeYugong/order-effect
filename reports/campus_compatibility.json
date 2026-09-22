@@ -1,0 +1,11 @@
+{
+  "model": "DeepSeek-V4-Flash-0731-W8A8",
+  "tool_call_valid": true,
+  "tool_result_used": true,
+  "thinking_probe": {
+    "reasoning_present": true,
+    "returned_model": "DeepSeek-V4-Flash-0731-W8A8",
+    "system_fingerprint": "vllm-0.21.0-tp8-89927d60"
+  },
+  "note": "Basic compatibility probes; not benchmark scores. High effort acceptance is not proof the server implements its semantics."
+}

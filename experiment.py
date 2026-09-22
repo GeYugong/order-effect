@@ -35,7 +35,7 @@ def parse_object(text):
 
 def clean_message(message):
     # Keep reasoning_content when supplied, as some gateways require it during tool turns.
-    return {k: v for k, v in message.items() if k in {"role", "content", "tool_calls", "reasoning_content"} and v is not None}
+    return {k: v for k, v in message.items() if k in {"role", "content", "tool_calls", "reasoning_content", "reasoning"} and v is not None}
 
 
 def run_task(task, gold, client, memory_text="", max_steps=12, on_event=None, checkpoint_path=None):
@@ -45,7 +45,7 @@ def run_task(task, gold, client, memory_text="", max_steps=12, on_event=None, ch
     system = ACTOR_PROMPT
     if memory_text:
         system += "\n\nPAST-TASK MEMORY (fallible):\n" + memory_text
-    signature = digest({"task": task, "system": system, "max_steps": max_steps, "model": client.model, "temperature": client.temperature, "max_tokens": client.max_tokens, "reasoning_effort": getattr(client, "reasoning_effort", None)})
+    signature = digest({"task": task, "system": system, "max_steps": max_steps, "model": client.model, "temperature": client.temperature, "max_tokens": client.max_tokens, "reasoning_effort": getattr(client, "reasoning_effort", None), "chat_template_kwargs": getattr(client, "chat_template_kwargs", None)})
     state = {"signature": signature, "messages": [{"role": "system", "content": system}], "decoded": [], "api": [], "caps": [], "turn": 0, "steps": [], "turn_started": False}
     if checkpoint_path and Path(checkpoint_path).exists():
         state = json.loads(Path(checkpoint_path).read_text(encoding="utf-8"))

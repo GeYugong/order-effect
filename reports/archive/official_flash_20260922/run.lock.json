@@ -1,0 +1,12 @@
+{
+  "manifest_hash": "5a9eb50d9da17e9bc9e5a7e5c6c27157a974e9fc57263967188e9f8e06d92132",
+  "code_sha256": {
+    "benchmark.py": "00a3f2ad14d23d1a059bf105f2d3378056935d023bfabb7702b0abf2d3f2bc3f",
+    "embedding.py": "f13ffd9a6662ff2d51680e90f149496361482002d3dd7f3a55c39077ef138c22",
+    "experiment.py": "5143fd393cbd9b3d1ec1ec0ff28b64592fff7e5f7522acf23dbcf03404d17d24",
+    "gateway.py": "b074641ac8da1e13fa8bb5ebc750272a36b996d456531645ff73b4c53771c282",
+    "study.py": "2b8fa74892ca0bf507673120761a57c93264ac9d943e48a961ba1d71417103f5",
+    "replay.py": "d3cac13cfdd0179cb6bfbfc7d602ff44560f9ceb37b92c0dd2b29549db597f65"
+  },
+  "embedding_lock_sha256": "8f0b4ace42515b61a76e4a57831bf6a9a265f71d7c30d1f03bc04e7f29d75b01"
+}

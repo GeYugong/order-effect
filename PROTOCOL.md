@@ -1,6 +1,18 @@
-# 实验协议 v2（Flash）
+# 校园网关重跑修订（2026-09-22，v3）
 
-预注册日期：2026-09-22。首版校内模型尝试遇到 40 RPM 限流，40 个运行均未完成，记录保留在 `results/failed_attempts/A_before_rate_limit`。用户随后指定 `deepseek-flash`，本版在任何完整主实验运行前重新固定配置。目标是证据质量，不预设顺序一定有显著影响。
+用户因成本要求改用校园 DeepSeek，模型不同则全部重做。旧官方 API 正式批次的 445 次任务、362 次工程作废任务、旧配置及报告整体归档，不按成功率筛选。原数据划分、四个排列、重复次数、评分规则和主要统计对比不变。此前已经查看过部分旧模型表现，不能把当前研究宣称为对整个研究问题完全盲目的预注册。
+
+新模型为 `DeepSeek-V4-Flash-0731-W8A8`，端点 `http://aigw.dlut.edu.cn/v1`，只读 DLUT_API_KEY，代码禁止直连付费 DeepSeek API，无自动回退。所有模型调用全局限速 24 次/分钟、请求超时 600 秒、并发 4 个运行。模型版本及 W8A8 量化以服务别名为据，无法审计服务端实际权重。
+
+质量配置：输出上限 32768、temperature 1.0、每用户轮最多 12 次调用；chat_template_kwargs 固定为 thinking_mode=thinking、enable_thinking=true、reasoning_effort=high、drop_thinking=false。探测确认该模板配置返回非空 reasoning，而仅传官方 thinking 参数未返回 reasoning；high 是否被服务端完整执行无法独立验证。响应 reasoning 同时兼容为 reasoning_content，后续工具轮保留。参数不根据正式测试结果调整。
+
+模板参考：https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731/blob/main/encoding/README.md 。开发验证仅用于兼容性检查，记录失败，不按成功率反复抽样。
+
+---
+
+# 实验协议 v3（校园 DeepSeek）
+
+协议修订日期：2026-09-22。历史限流、官方 Flash 尝试和暂停批次均完整归档于 results/archive/official_flash_20260922；历史协议保存在 reports/archive/official_flash_20260922/PROTOCOL.md。当前校园批次在正式调用前固定配置。目标是证据质量，不预设顺序一定有显著影响。
 
 ## 研究问题与文献
 
@@ -21,15 +33,15 @@
 
 ## A：任务顺序的总效应
 
-2 方法（无记忆 / reasoning_memory）× 4 顺序（原始、反向、两次固定打乱）× 5 独立完整运行。每次 30 道积累题 + 20 道固定测试题，共 2000 次任务执行。不同运行调度顺序随机化。所有条件使用 `deepseek-flash`、thinking enabled、reasoning_effort low、输出上限 8192、每用户轮最多 12 次模型调用。DeepSeek 思考模式不使用 temperature，配置明确为 null，而非假称控制到了 0.7。
+2 方法（无记忆 / reasoning_memory）× 4 顺序（原始、反向、两次固定打乱）× 5 独立完整运行。每次 30 道积累题 + 20 道固定测试题，共 2000 次任务执行。不同运行调度顺序随机化。所有条件使用 `DeepSeek-V4-Flash-0731-W8A8`（校园网关）、通过 chat_template_kwargs 请求 thinking、reasoning_effort high、输出上限 32768、每用户轮最多 12 次模型调用。校园自托管接口显式传 temperature=1.0；不将采样参数或服务端推理强度的实际实现视为已独立验证。
 
-开发集上 high effort 出现输出截断，low effort 在同一开发任务通过且未截断，所以在主实验前固定 low。四个开发任务不能用于估计正式成功率。校内 Qwen embedding 接口连续 503，因此检索改为本地 `BAAI/bge-base-en-v1.5`（fastembed CPU ONNX），权重和分词文件在 embedding.lock.json 校验。该变化不使用主测试成绩做决策。
+历史官方 API 批次曾在开发集上因 high effort 输出截断选择 low；该配置现已归档，不适用于本轮校园批次。四个开发任务不能用于估计正式成功率。校内 Qwen embedding 接口连续 503，因此检索改为本地 `BAAI/bge-base-en-v1.5`（fastembed CPU ONNX），权重和分词文件在 embedding.lock.json 校验。该变化不使用主测试成绩做决策。
 
 主要指标：冻结最终记忆后的固定测试成功率；次要指标：积累阶段成功率。另记工具循环超限、词元、时长、生成条目、实际检索条目、完整轨迹。
 
 主要效应量：(有记忆的两个 shuffle 平均成功率 − 有记忆 ordinal 成功率) − (无记忆的两个 shuffle 平均成功率 − 无记忆 ordinal 成功率)。报告每组运行分布和差值的 Welch-Satterthwaite 95% 区间/双侧 p 值；reverse 与各个 shuffle 比较列为探索性并校正多重检验。样本是完整运行，不将同一进化过程中的任务当作独立重复。5 次运行的区间和正态近似可能不稳定；未显著不等于不存在效应。
 
-`reasoning_memory` 是 ReasoningBank 风格的明确适配：每道任务从成功或失败轨迹提炼最多 3 条 title/description/content，使用本地 BGE 向量余弦检索前 3 条（稳定条目 ID 打破相同分数的平局）。执行模型和记忆作者均为 deepseek-flash。使用官方程序判分的二元结果，不向模型提供标准答案、预期调用、状态差异或未来用户话语。无 MaTTS，无额外 LLM 裁判。工具环境、提示词格式、模型和 embedding 均有适配，不能称为官方实现分数复现。
+`reasoning_memory` 是 ReasoningBank 风格的明确适配：每道任务从成功或失败轨迹提炼最多 3 条 title/description/content，使用本地 BGE 向量余弦检索前 3 条（稳定条目 ID 打破相同分数的平局）。执行模型和记忆作者均为校园 DeepSeek-V4-Flash-0731-W8A8。使用官方程序判分的二元结果，不向模型提供标准答案、预期调用、状态差异或未来用户话语。无 MaTTS，无额外 LLM 裁判。工具环境、提示词格式、模型和 embedding 均有适配，不能称为官方实现分数复现。
 
 所有测试任务独立初始化环境及对话，测试期间不生成、更新记忆。无记忆条件跨任务不保留任何对话。初始状态中的模拟账户/交易均属于公开测试数据，工具不连接真实外部账户。
 
@@ -45,7 +57,7 @@
 
 ## 模型交叉验证与终止规则
 
-本轮按用户最新选择，A 与 B 全部使用 Flash，不混合不同生成模型。跨模型外部有效性验证留作后续研究，不以校内模型的开发结果补充本轮主统计。
+本轮按用户最新选择，A 与 B 全部使用校园 DeepSeek-V4-Flash-0731-W8A8，从零开始，不混入官方付费 API 的任何任务、记忆或经验池。跨模型外部有效性验证留作后续研究。
 
 开发集仅用于排查实现错误；禁止按固定测试集表现调整提示词、挑任务或挑种子。模型响应含 finish_reason、返回模型名、服务 fingerprint（若有）和 usage；网关别名未提供精确权重版本是复现限制。
 
@@ -53,8 +65,12 @@ HTTP/超时/结构错误不当作任务失败。开发测试遇到 503 后、主
 
 断点续跑保留已经返回的模型响应、完成的任务、生成的记忆和本地 embedding，不重新采样已完成步骤；工具状态通过相同调用在新模拟实例中恢复。最多自动恢复阶段 3 次，每次记录。模型输出格式错误属于方法执行表现：不重抽更好的记忆；抽取失败则不新增，融合失败则保留此前 playbook，错误输出计入日志。基础设施异常与这些模型格式失败分开统计。
 
-实现审计修订：BFCL MathAPI.logarithm 会修改进程共享的 mpmath 精度，因此本项目对模拟工具执行和结果格式化加全局互斥锁；网络请求仍并行。专门的交错线程测试验证不同调用的精度不能串扰。修订前的 Flash 批次没有完整运行完成，362 次已完成任务全部保留为工程校验并整体排除，不根据成败筛选；主批次在修订版本从头执行，旧数据位于 results/failed_attempts/A_before_simulator_lock。
+实现审计修订：BFCL MathAPI.logarithm 会修改进程共享的 mpmath 精度，因此本项目对模拟工具执行和结果格式化加全局互斥锁；网络请求仍并行。专门的交错线程测试验证不同调用的精度不能串扰。修订前的 Flash 批次没有完整运行完成，362 次已完成任务全部保留为工程校验并整体排除，不根据成败筛选；主批次在修订版本从头执行，旧数据现位于 results/archive/official_flash_20260922/failed_attempts/A_before_simulator_lock。
 
 ## 推断边界
 
 A 测量任务顺序改变经历、记忆和后续行为的总体效应；B 控制经验内容，只改变融合输入顺序。二者均不能单凭成功率说明难度课程、错误记忆或容量竞争中的哪一个机制必然成立；案例与来源追踪用于提出机制解释，后续需针对性消融验证。
+
+## 校园接口启动验证
+
+正式任务前执行四个既定开发任务，随后用其经验验证一次融合。开发成功率不作为启动门槛；若完全无法生成有效记忆或融合接口校验失败，则停止排查兼容性，不自动切换模型。此次验证与正式评估分离。

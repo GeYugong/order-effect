@@ -10,7 +10,7 @@ from benchmark import ROOT, dataset
 from experiment import ReasoningMemory, digest, event_sink, extract, memory_text, merge, now, run_task, save
 from gateway import Gateway
 
-MODEL = "deepseek-flash"
+MODEL = "DeepSeek-V4-Flash-0731-W8A8"
 
 
 def build_manifest():
@@ -44,7 +44,10 @@ def build_manifest():
         orders[f"shuffle{i}"] = order
     manifest = {
         "created_utc": now(), "model": MODEL, "embedding_model": "BAAI/bge-base-en-v1.5",
-        "temperature": None, "thinking": "enabled", "reasoning_effort": "low", "max_tokens": 8192, "max_steps_per_turn": 12,
+        "endpoint": "http://aigw.dlut.edu.cn/v1", "provider": "campus",
+        "temperature": 1.0, "thinking": "enabled via campus chat template", "reasoning_effort": "high", "max_tokens": 32768, "max_steps_per_turn": 12,
+        "chat_template_kwargs": {"thinking_mode": "thinking", "enable_thinking": True, "reasoning_effort": "high", "drop_thinking": False},
+        "requests_per_minute": 24, "request_timeout_seconds": 600, "protocol_revision": "campus-v3",
         "repetitions": 5, "split_seed": 20260922, "order_seeds": [1729, 2718],
         "schedule_seed": 8675309, "splits": splits, "orders": orders,
         "methods": ["no_memory", "reasoning_memory"], "replay_methods": ["merge", "canonical_all"],
@@ -62,6 +65,7 @@ def build_manifest():
 def client_for(manifest, model=None):
     client = Gateway(model or manifest["model"], manifest["temperature"], manifest["max_tokens"], token_limit=50000000)
     client.reasoning_effort = manifest.get("reasoning_effort", "low")
+    client.chat_template_kwargs = manifest.get("chat_template_kwargs")
     return client
 
 

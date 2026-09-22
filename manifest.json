@@ -1,9 +1,9 @@
 {
-  "created_utc": "2026-09-22T07:41:05.532149+00:00",
-  "model": "deepseek-flash",
+  "created_utc": "2026-09-22T15:05:09.954646+00:00",
+  "model": "DeepSeek-V4-Flash-0731-W8A8",
   "embedding_model": "BAAI/bge-base-en-v1.5",
-  "temperature": null,
-  "max_tokens": 8192,
+  "temperature": 1.0,
+  "max_tokens": 32768,
   "max_steps_per_turn": 12,
   "repetitions": 5,
   "split_seed": 20260922,
@@ -363,8 +363,20 @@
   "generation_seed": "not supplied: endpoint seed determinism is not assumed",
   "source": "6ea57973c7a6097fd7c5915698c54c17c5b1b6c8",
   "split_note": "One example per identical sorted path group; stratified by four official 50-task domain blocks. Not an official BFCL split.",
-  "thinking": "enabled",
-  "reasoning_effort": "low",
+  "thinking": "enabled via campus chat template",
+  "reasoning_effort": "high",
   "amendment": "User chose Flash; high-effort development runs hit output caps. Low effort validated on development only. Local encoder replaces unreliable campus embedding API before complete main runs.",
-  "embedding_backend": "local CPU ONNX; model files hash locked"
+  "embedding_backend": "local CPU ONNX; model files hash locked",
+  "endpoint": "http://aigw.dlut.edu.cn/v1",
+  "provider": "campus",
+  "chat_template_kwargs": {
+    "thinking_mode": "thinking",
+    "enable_thinking": true,
+    "reasoning_effort": "high",
+    "drop_thinking": false
+  },
+  "requests_per_minute": 24,
+  "request_timeout_seconds": 600,
+  "protocol_revision": "campus-v3",
+  "restart_reason": "User requested campus DeepSeek full restart for cost; prior official API results excluded as a whole"
 }

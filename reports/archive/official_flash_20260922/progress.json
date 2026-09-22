@@ -1,0 +1,24 @@
+{
+  "state": "stopped",
+  "stage": "A",
+  "updated": "2026-09-22T08:36:16.878467+00:00",
+  "pid": 34636,
+  "model": "deepseek-flash",
+  "studies": {
+    "A": {
+      "complete_runs": 0,
+      "expected_runs": 40,
+      "completed_tasks": 445,
+      "expected_tasks": 2000,
+      "runs_with_prior_failure": 0
+    },
+    "B": {
+      "complete_runs": 0,
+      "expected_runs": 25,
+      "completed_tasks": 0,
+      "expected_tasks": 1500,
+      "runs_with_prior_failure": 0
+    }
+  },
+  "error": "STOP marker; completed checkpoints retained"
+}

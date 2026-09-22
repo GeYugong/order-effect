@@ -11,7 +11,7 @@ BASE_URL = "http://aigw.dlut.edu.cn/v1"
 
 
 def rate_limit():
-    """Cross-process pacing: 32 requests/minute against the observed 40/min limit."""
+    """Cross-process pacing: 24 requests/minute against the observed 40/min limit."""
     directory = Path(__file__).resolve().parent / "results"
     directory.mkdir(exist_ok=True)
     with sqlite3.connect(directory / "gateway_rate.sqlite", timeout=30) as db:
@@ -19,7 +19,7 @@ def rate_limit():
         db.execute("BEGIN IMMEDIATE")
         row = db.execute("SELECT next_at FROM pace WHERE id=1").fetchone()
         at = max(time.time(), row[0] if row else 0)
-        db.execute("INSERT OR REPLACE INTO pace VALUES (1, ?)", (at + 60/32,))
+        db.execute("INSERT OR REPLACE INTO pace VALUES (1, ?)", (at + 60/24,))
         db.commit()
     delay = at - time.time()
     if delay > 0:
@@ -46,6 +46,7 @@ class Gateway:
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.reasoning_effort = "low"
+        self.chat_template_kwargs = None
         self.token_limit = token_limit
         self.usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
         self.calls = 0
@@ -71,19 +72,19 @@ class Gateway:
                 handle.write(json.dumps(event) + "\n")
 
     def request(self, method, path, payload=None):
-        deepseek = self.model in {"deepseek-flash", "deepseek-v4-pro"} and path != "/embeddings"
-        base_url = "https://api.deepseek.com" if deepseek else BASE_URL
-        key = api_key("DEEPSEEK_API_KEY" if deepseek else "DLUT_API_KEY")
+        if self.model in {"deepseek-flash", "deepseek-v4-pro"}:
+            raise RuntimeError("Direct paid DeepSeek API disabled for the campus-only experiment")
+        base_url = BASE_URL
+        key = api_key("DLUT_API_KEY")
         data = None if payload is None else json.dumps(payload).encode("utf-8")
         req = urllib.request.Request(
             base_url + path, data=data, method=method,
             headers={"Authorization": "Bearer " + key, "Content-Type": "application/json"},
         )
         for attempt in range(4):
-            if not deepseek:
-                rate_limit()
+            rate_limit()
             try:
-                with urllib.request.urlopen(req, timeout=120) as response:
+                with urllib.request.urlopen(req, timeout=600) as response:
                     result = json.load(response)
                 self._record({"kind": "success", "path": path, "usage": result.get("usage", {}), "model": result.get("model"), "time": time.time()})
                 return result
@@ -107,10 +108,10 @@ class Gateway:
             "model": self.model, "messages": messages,
             "max_tokens": self.max_tokens,
         }
-        if self.model in {"deepseek-flash", "deepseek-v4-pro"}:
-            payload.update(thinking={"type": "enabled"}, reasoning_effort=self.reasoning_effort)
-        elif self.temperature is not None:
+        if self.temperature is not None:
             payload["temperature"] = self.temperature
+        if self.chat_template_kwargs is not None:
+            payload["chat_template_kwargs"] = self.chat_template_kwargs
         if tools:
             payload.update(tools=tools, tool_choice="auto")
         payload.update(extra)
@@ -122,9 +123,13 @@ class Gateway:
         for field in self.usage:
             self.usage[field] += usage.get(field, 0) or 0
         choice = result["choices"][0]
-        return choice["message"], {
+        message = choice["message"]
+        if message.get("reasoning") and not message.get("reasoning_content"):
+            message["reasoning_content"] = message["reasoning"]
+        return message, {
             "model_requested": self.model, "model_returned": result.get("model"),
-            "reasoning_effort": self.reasoning_effort if self.model.startswith("deepseek-") else None,
+            "reasoning_effort": self.reasoning_effort if self.chat_template_kwargs else None,
+            "endpoint": BASE_URL, "chat_template_kwargs": self.chat_template_kwargs,
             "system_fingerprint": result.get("system_fingerprint"),
             "finish_reason": choice.get("finish_reason"), "usage": usage,
             "elapsed_seconds": round(time.monotonic() - started, 3),

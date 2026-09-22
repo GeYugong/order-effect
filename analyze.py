@@ -122,4 +122,6 @@ def report(results):
 if __name__ == "__main__":
     results = [summarize(study) for study in ("A", "B", "C") if (ROOT / "results" / study).exists()]
     report(results)
+    from case_audit import audit
+    audit()
     print(json.dumps([{k: r[k] for k in ("study", "complete_runs", "primary")} for r in results]))

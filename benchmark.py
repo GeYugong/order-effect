@@ -5,9 +5,11 @@ import importlib
 import json
 from pathlib import Path
 import sys
+import threading
 import types
 
 ROOT = Path(__file__).resolve().parent
+_runtime_lock = threading.RLock()
 sys.path.insert(0, str(ROOT / "vendor"))
 from bfcl_eval.constants.executable_backend_config import (  # noqa: E402
     CLASS_FILE_PATH_MAPPING, MULTI_TURN_FUNC_DOC_FILE_MAPPING, STATELESS_CLASSES,
@@ -80,6 +82,12 @@ class Runtime:
         return ast.literal_eval(node)
 
     def execute(self, call):
+        # Upstream MathAPI changes process-global mpmath precision. Serialize the very
+        # short simulator calls (including result formatting), not network/model calls.
+        with _runtime_lock:
+            return self._execute_locked(call)
+
+    def _execute_locked(self, call):
         try:
             node = ast.parse(call, mode="eval").body
             if not isinstance(node, ast.Call):

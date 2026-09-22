@@ -52,6 +52,27 @@ class IntegrityTests(unittest.TestCase):
         self.assertNotEqual(a.execute("ls()"), b.execute("ls()"))
         self.assertEqual(task, before)
 
+    def test_shared_math_precision_cannot_cross_concurrent_calls(self):
+        from concurrent.futures import ThreadPoolExecutor
+        import time
+        import mpmath
+        task = self.tasks["multi_turn_base_0"]
+        a, b = Runtime(task), Runtime(task)
+        original = mpmath.mp.dps
+        def yielding_math(precision):
+            mpmath.mp.dps = precision
+            time.sleep(.02)
+            return str(mpmath.mp.dps)
+        a.methods["probe"] = yielding_math
+        b.methods["probe"] = yielding_math
+        try:
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                fa = pool.submit(a.execute, "probe(precision=7)")
+                fb = pool.submit(b.execute, "probe(precision=19)")
+                self.assertEqual([fa.result(), fb.result()], ["7", "19"])
+        finally:
+            mpmath.mp.dps = original
+
     def test_split_and_permutation_integrity(self):
         manifest = build_manifest()
         ids = [x for group in manifest["splits"].values() for x in group]

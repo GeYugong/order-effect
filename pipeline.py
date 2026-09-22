@@ -77,9 +77,12 @@ def run_stage(stage, args):
             while child.poll() is None:
                 progress(stage=stage)
                 if (ROOT/"results/STOP").exists():
-                    child.terminate()
+                    if os.name == "nt":
+                        subprocess.run(["taskkill", "/PID", str(child.pid), "/T", "/F"], capture_output=True)
+                    else:
+                        child.terminate()
                     child.wait(timeout=20)
-                    raise InterruptedError("Stopped at user marker; completed checkpoints retained")
+                    raise InterruptedError("STOP marker; completed checkpoints retained")
                 time.sleep(15)
         if child.returncode == 0:
             return

@@ -123,6 +123,10 @@ class IntegrityTests(unittest.TestCase):
         items, log = extract(self.tasks["multi_turn_base_0"], {"messages": [], "success": False}, BadWriter())
         self.assertEqual(items, [])
         self.assertFalse(log["update_valid"])
+        prior = [{"content": "Keep a valid rule", "sources": ["t1"]}]
+        result, log = merge(prior, [], BadWriter())
+        self.assertEqual(result, prior)
+        self.assertFalse(log["update_valid"])
 
     def test_local_embeddings_are_order_invariant(self):
         from embedding import embed
@@ -132,10 +136,6 @@ class IntegrityTests(unittest.TestCase):
         b = embed(texts[::-1])
         self.assertTrue(np.array_equal(a[0], b[1]))
         self.assertEqual(len(a[0]), 768)
-        prior = [{"content": "Keep a valid rule", "sources": ["t1"]}]
-        result, log = merge(prior, [], BadWriter())
-        self.assertEqual(result, prior)
-        self.assertFalse(log["update_valid"])
 
 
 if __name__ == "__main__":

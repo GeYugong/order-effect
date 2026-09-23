@@ -1,16 +1,16 @@
 {
-  "state": "running",
-  "stage": "development validation",
-  "updated": "2026-09-22T15:10:27.980705+00:00",
+  "state": "needs_attention",
+  "stage": "A",
+  "updated": "2026-09-23T08:42:05.342314+00:00",
   "pid": 41968,
   "model": "DeepSeek-V4-Flash-0731-W8A8",
   "studies": {
     "A": {
-      "complete_runs": 0,
+      "complete_runs": 22,
       "expected_runs": 40,
-      "completed_tasks": 0,
+      "completed_tasks": 1346,
       "expected_tasks": 2000,
-      "runs_with_prior_failure": 0
+      "runs_with_prior_failure": 18
     },
     "B": {
       "complete_runs": 0,
@@ -19,5 +19,6 @@
       "expected_tasks": 1500,
       "runs_with_prior_failure": 0
     }
-  }
+  },
+  "error": "Stage A failed after 3 checkpoint resumes. Inspect stage_A.log."
 }

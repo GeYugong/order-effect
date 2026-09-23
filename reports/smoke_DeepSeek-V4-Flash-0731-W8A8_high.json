@@ -1,0 +1,41 @@
+{
+  "rows": [
+    {
+      "id": "multi_turn_base_10",
+      "success": false,
+      "caps": [
+        {
+          "turn": 1,
+          "reason": "step_limit"
+        }
+      ],
+      "memories": 3
+    },
+    {
+      "id": "multi_turn_base_64",
+      "success": true,
+      "caps": [],
+      "memories": 3
+    },
+    {
+      "id": "multi_turn_base_105",
+      "success": true,
+      "caps": [],
+      "memories": 3
+    },
+    {
+      "id": "multi_turn_base_156",
+      "success": true,
+      "caps": [],
+      "memories": 3
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 509245,
+    "completion_tokens": 21746,
+    "total_tokens": 530991
+  },
+  "api_calls": 68,
+  "model": "DeepSeek-V4-Flash-0731-W8A8",
+  "transport_events": []
+}

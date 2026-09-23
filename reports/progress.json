@@ -1,16 +1,16 @@
 {
   "state": "needs_attention",
   "stage": "A",
-  "updated": "2026-09-23T08:42:05.342314+00:00",
-  "pid": 41968,
+  "updated": "2026-09-23T12:57:12.959955+00:00",
+  "pid": 63072,
   "model": "DeepSeek-V4-Flash-0731-W8A8",
   "studies": {
     "A": {
-      "complete_runs": 22,
+      "complete_runs": 24,
       "expected_runs": 40,
-      "completed_tasks": 1346,
+      "completed_tasks": 1410,
       "expected_tasks": 2000,
-      "runs_with_prior_failure": 18
+      "runs_with_prior_failure": 16
     },
     "B": {
       "complete_runs": 0,

@@ -1,6 +1,9 @@
 """Small OpenAI-compatible client; credentials never enter logs or config files."""
 import json
 import os
+import hashlib
+import http.client
+import re
 from pathlib import Path
 import sqlite3
 import time
@@ -8,6 +11,15 @@ import urllib.error
 import urllib.request
 
 BASE_URL = "http://aigw.dlut.edu.cn/v1"
+TRANSPORT_REVISION = "campus-unicode-json-direct-v1"
+
+
+def encode_payload(payload):
+    """Standard JSON Unicode escapes; preserve every decoded key and value exactly."""
+    def escaped_string(match):
+        units = json.loads(match.group()).encode("utf-16-be", errors="surrogatepass")
+        return '"' + ''.join('\\u' + units[i:i+2].hex() for i in range(0, len(units), 2)) + '"'
+    return re.sub(r'"(?:[^"\\]|\\.)*"', escaped_string, json.dumps(payload, ensure_ascii=True)).encode("ascii")
 
 
 def rate_limit():
@@ -76,30 +88,40 @@ class Gateway:
             raise RuntimeError("Direct paid DeepSeek API disabled for the campus-only experiment")
         base_url = BASE_URL
         key = api_key("DLUT_API_KEY")
-        data = None if payload is None else json.dumps(payload).encode("utf-8")
+        data = None if payload is None else encode_payload(payload)
+        payload_hash = hashlib.sha256(json.dumps(payload, sort_keys=True, ensure_ascii=True).encode()).hexdigest()
+        # Scope direct routing to this client; do not modify system proxy settings.
+        opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
         req = urllib.request.Request(
             base_url + path, data=data, method=method,
             headers={"Authorization": "Bearer " + key, "Content-Type": "application/json"},
         )
         for attempt in range(4):
             rate_limit()
+            started = time.monotonic()
+            retry_after = 0
             try:
-                with urllib.request.urlopen(req, timeout=600) as response:
+                with opener.open(req, timeout=600) as response:
                     result = json.load(response)
-                self._record({"kind": "success", "path": path, "usage": result.get("usage", {}), "model": result.get("model"), "time": time.time()})
+                self._record({"kind": "success", "path": path, "usage": result.get("usage", {}), "model": result.get("model"), "time": time.time(), "transport_revision": TRANSPORT_REVISION, "payload_hash": payload_hash, "elapsed_seconds": round(time.monotonic()-started, 3)})
                 return result
             except urllib.error.HTTPError as exc:
                 body = exc.read().decode("utf-8", errors="replace").replace(key, "[REDACTED]")
                 error = f"Gateway HTTP {exc.code}: {body[:800]}"
-                retryable = exc.code in (429, 500, 502, 503, 504)
-            except (urllib.error.URLError, TimeoutError, ConnectionError) as exc:
+                retryable = exc.code in (408, 429, 500, 502, 503, 504, 520, 522, 524)
+                try:
+                    retry_after = min(600, max(0, float(exc.headers.get("Retry-After", 0))))
+                except (TypeError, ValueError):
+                    pass
+            except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.IncompleteRead, json.JSONDecodeError) as exc:
                 error = "Gateway network/timeout failure: " + type(exc).__name__
                 retryable = True
-            self.transport_events.append({"path": path, "attempt": attempt + 1, "error": error, "time": time.time()})
+            delay = max(retry_after, 60 * 2 ** attempt) if retryable and attempt < 3 else 0
+            self.transport_events.append({"path": path, "attempt": attempt + 1, "error": error, "time": time.time(), "transport_revision": TRANSPORT_REVISION, "payload_hash": payload_hash, "elapsed_seconds": round(time.monotonic()-started, 3), "retry_delay_seconds": delay})
             self._record({"kind": "transport_error", **self.transport_events[-1]})
             if not retryable or attempt == 3:
                 raise RuntimeError(error + " (attempt recorded)") from None
-            time.sleep(2 ** (attempt + 1))
+            time.sleep(delay)
 
     def chat(self, messages, tools=None, **extra):
         if self.usage["total_tokens"] >= self.token_limit:
@@ -130,6 +152,7 @@ class Gateway:
             "model_requested": self.model, "model_returned": result.get("model"),
             "reasoning_effort": self.reasoning_effort if self.chat_template_kwargs else None,
             "endpoint": BASE_URL, "chat_template_kwargs": self.chat_template_kwargs,
+            "transport_revision": TRANSPORT_REVISION,
             "system_fingerprint": result.get("system_fingerprint"),
             "finish_reason": choice.get("finish_reason"), "usage": usage,
             "elapsed_seconds": round(time.monotonic() - started, 3),

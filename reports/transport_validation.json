@@ -1,0 +1,21 @@
+{
+  "probes": [
+    {
+      "run": "reasoning_memory_reverse_r0",
+      "finish": "stop",
+      "seconds": 13.219,
+      "model": "DeepSeek-V4-Flash-0731-W8A8",
+      "transport_revision": "campus-unicode-json-direct-v1",
+      "tool_calls": 0
+    },
+    {
+      "run": "no_memory_reverse_r0",
+      "finish": "tool_calls",
+      "seconds": 2.719,
+      "model": "DeepSeek-V4-Flash-0731-W8A8",
+      "transport_revision": "campus-unicode-json-direct-v1",
+      "tool_calls": 2
+    }
+  ],
+  "note": "Exact pending payload replay for transport validation only; responses excluded from task results. No prompt, memory, generation parameters or tool schemas changed."
+}

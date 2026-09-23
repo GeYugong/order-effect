@@ -87,7 +87,12 @@ def run_stage(stage, args):
         if child.returncode == 0:
             return
         if attempt < 3:
-            time.sleep(60)
+            # Give an overloaded upstream five minutes, while retaining STOP responsiveness.
+            for remaining in range(300, 0, -15):
+                if (ROOT/"results/STOP").exists():
+                    raise InterruptedError("STOP marker during upstream cooldown")
+                progress(state="waiting_retry", stage=stage, error=f"Upstream/stage failure; next checkpoint resume in {remaining}s")
+                time.sleep(15)
     raise RuntimeError(f"Stage {stage} failed after 3 checkpoint resumes. Inspect {logfile.name}.")
 
 

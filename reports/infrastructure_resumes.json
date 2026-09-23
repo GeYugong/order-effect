@@ -1,0 +1,11 @@
+[
+  {
+    "time": "2026-09-23T08:47:23.605875+00:00",
+    "reason": "Campus 503/524 exhausted three stage invocations; resume unchanged model and checkpoints with workers reduced from 4 to 2",
+    "completed_tasks_A": 1346,
+    "complete_runs_A": 22,
+    "workers": 2,
+    "model_or_scoring_changed": false,
+    "note": "Operational concurrency amendment only; additional transport attempts recorded in existing ledgers; no outcome-based reruns."
+  }
+]

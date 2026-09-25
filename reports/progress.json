@@ -1,7 +1,7 @@
 {
-  "state": "running",
-  "stage": "B finished",
-  "updated": "2026-09-25T18:13:01.697211+00:00",
+  "state": "complete",
+  "stage": "A+B",
+  "updated": "2026-09-25T18:13:09.883397+00:00",
   "pid": 75204,
   "model": "DeepSeek-V4-Flash-0731-W8A8",
   "studies": {

@@ -1,16 +1,133 @@
 {
   "status": "incomplete",
   "factorial_runs": 0,
-  "ablation_runs": 2,
+  "ablation_runs": 30,
   "factorial_primary": {
     "available": false,
     "reason": "Wait for all 12 writer runs; no interim testing"
   },
-  "factorial_order_gaps_descriptive": {},
-  "ablation_fisher_holm": {},
-  "ablation_interpretation": "规则消融尚未全部完成，不作推断。",
+  "ablation_fisher_holm": {
+    "original": {
+      "available": true,
+      "estimate": 0.4,
+      "ci95_conservative": [
+        -0.25547142908718135,
+        0.7718404062460017
+      ],
+      "p_two_sided": 0.08668730650154799,
+      "p_holm": 0.17337461300309598
+    },
+    "remove_control": {
+      "available": true,
+      "estimate": 0.4,
+      "ci95_conservative": [
+        -0.25547142908718135,
+        0.7718404062460017
+      ],
+      "p_two_sided": 0.08668730650154799,
+      "p_holm": 0.17337461300309598
+    }
+  },
   "factorial_rows": [],
   "ablation_rows": [
+    {
+      "condition": "original",
+      "rep": 0,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 63104,
+        "completion_tokens": 2040,
+        "total_tokens": 65144
+      },
+      "memory_hash": "747b521168d2ebef39ec604c0619546cbb2659d8a443ddb1c2484b984de7e7bd",
+      "finished": "2026-09-25T19:41:32.259274+00:00"
+    },
+    {
+      "condition": "original",
+      "rep": 1,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 56299,
+        "completion_tokens": 1791,
+        "total_tokens": 58090
+      },
+      "memory_hash": "747b521168d2ebef39ec604c0619546cbb2659d8a443ddb1c2484b984de7e7bd",
+      "finished": "2026-09-25T19:27:12.372578+00:00"
+    },
+    {
+      "condition": "original",
+      "rep": 2,
+      "score": 0,
+      "booking_called": false,
+      "booking_on_requested_turn": false,
+      "usage": {
+        "prompt_tokens": 61454,
+        "completion_tokens": 2680,
+        "total_tokens": 64134
+      },
+      "memory_hash": "747b521168d2ebef39ec604c0619546cbb2659d8a443ddb1c2484b984de7e7bd",
+      "finished": "2026-09-25T19:36:27.993717+00:00"
+    },
+    {
+      "condition": "original",
+      "rep": 3,
+      "score": 0,
+      "booking_called": false,
+      "booking_on_requested_turn": false,
+      "usage": {
+        "prompt_tokens": 63006,
+        "completion_tokens": 2480,
+        "total_tokens": 65486
+      },
+      "memory_hash": "747b521168d2ebef39ec604c0619546cbb2659d8a443ddb1c2484b984de7e7bd",
+      "finished": "2026-09-25T19:30:42.391305+00:00"
+    },
+    {
+      "condition": "original",
+      "rep": 4,
+      "score": 0,
+      "booking_called": false,
+      "booking_on_requested_turn": false,
+      "usage": {
+        "prompt_tokens": 56088,
+        "completion_tokens": 2053,
+        "total_tokens": 58141
+      },
+      "memory_hash": "747b521168d2ebef39ec604c0619546cbb2659d8a443ddb1c2484b984de7e7bd",
+      "finished": "2026-09-25T19:43:12.205288+00:00"
+    },
+    {
+      "condition": "original",
+      "rep": 5,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 61593,
+        "completion_tokens": 1577,
+        "total_tokens": 63170
+      },
+      "memory_hash": "747b521168d2ebef39ec604c0619546cbb2659d8a443ddb1c2484b984de7e7bd",
+      "finished": "2026-09-25T19:40:19.892796+00:00"
+    },
+    {
+      "condition": "original",
+      "rep": 6,
+      "score": 0,
+      "booking_called": false,
+      "booking_on_requested_turn": false,
+      "usage": {
+        "prompt_tokens": 56190,
+        "completion_tokens": 2145,
+        "total_tokens": 58335
+      },
+      "memory_hash": "747b521168d2ebef39ec604c0619546cbb2659d8a443ddb1c2484b984de7e7bd",
+      "finished": "2026-09-25T19:39:06.018390+00:00"
+    },
     {
       "condition": "original",
       "rep": 7,
@@ -26,6 +143,160 @@
       "finished": "2026-09-25T19:26:16.770993+00:00"
     },
     {
+      "condition": "original",
+      "rep": 8,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 67920,
+        "completion_tokens": 1732,
+        "total_tokens": 69652
+      },
+      "memory_hash": "747b521168d2ebef39ec604c0619546cbb2659d8a443ddb1c2484b984de7e7bd",
+      "finished": "2026-09-25T19:37:28.821083+00:00"
+    },
+    {
+      "condition": "original",
+      "rep": 9,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 78270,
+        "completion_tokens": 2604,
+        "total_tokens": 80874
+      },
+      "memory_hash": "747b521168d2ebef39ec604c0619546cbb2659d8a443ddb1c2484b984de7e7bd",
+      "finished": "2026-09-25T19:28:35.327578+00:00"
+    },
+    {
+      "condition": "remove_control",
+      "rep": 0,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 54131,
+        "completion_tokens": 1591,
+        "total_tokens": 55722
+      },
+      "memory_hash": "a39818295ab9d584d9b358f3fb780013406d9792aeef3917929611a51c97277f",
+      "finished": "2026-09-25T19:33:08.567945+00:00"
+    },
+    {
+      "condition": "remove_control",
+      "rep": 1,
+      "score": 0,
+      "booking_called": false,
+      "booking_on_requested_turn": false,
+      "usage": {
+        "prompt_tokens": 60602,
+        "completion_tokens": 2117,
+        "total_tokens": 62719
+      },
+      "memory_hash": "a39818295ab9d584d9b358f3fb780013406d9792aeef3917929611a51c97277f",
+      "finished": "2026-09-25T19:43:57.785207+00:00"
+    },
+    {
+      "condition": "remove_control",
+      "rep": 2,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 61260,
+        "completion_tokens": 1939,
+        "total_tokens": 63199
+      },
+      "memory_hash": "a39818295ab9d584d9b358f3fb780013406d9792aeef3917929611a51c97277f",
+      "finished": "2026-09-25T19:33:21.936177+00:00"
+    },
+    {
+      "condition": "remove_control",
+      "rep": 3,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 67448,
+        "completion_tokens": 2233,
+        "total_tokens": 69681
+      },
+      "memory_hash": "a39818295ab9d584d9b358f3fb780013406d9792aeef3917929611a51c97277f",
+      "finished": "2026-09-25T19:45:49.483142+00:00"
+    },
+    {
+      "condition": "remove_control",
+      "rep": 4,
+      "score": 0,
+      "booking_called": false,
+      "booking_on_requested_turn": false,
+      "usage": {
+        "prompt_tokens": 61425,
+        "completion_tokens": 2322,
+        "total_tokens": 63747
+      },
+      "memory_hash": "a39818295ab9d584d9b358f3fb780013406d9792aeef3917929611a51c97277f",
+      "finished": "2026-09-25T19:39:21.805989+00:00"
+    },
+    {
+      "condition": "remove_control",
+      "rep": 5,
+      "score": 0,
+      "booking_called": false,
+      "booking_on_requested_turn": false,
+      "usage": {
+        "prompt_tokens": 58342,
+        "completion_tokens": 2428,
+        "total_tokens": 60770
+      },
+      "memory_hash": "a39818295ab9d584d9b358f3fb780013406d9792aeef3917929611a51c97277f",
+      "finished": "2026-09-25T19:32:05.011902+00:00"
+    },
+    {
+      "condition": "remove_control",
+      "rep": 6,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 54231,
+        "completion_tokens": 1422,
+        "total_tokens": 55653
+      },
+      "memory_hash": "a39818295ab9d584d9b358f3fb780013406d9792aeef3917929611a51c97277f",
+      "finished": "2026-09-25T19:40:35.528427+00:00"
+    },
+    {
+      "condition": "remove_control",
+      "rep": 7,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 55869,
+        "completion_tokens": 1702,
+        "total_tokens": 57571
+      },
+      "memory_hash": "a39818295ab9d584d9b358f3fb780013406d9792aeef3917929611a51c97277f",
+      "finished": "2026-09-25T19:41:35.409153+00:00"
+    },
+    {
+      "condition": "remove_control",
+      "rep": 8,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 70464,
+        "completion_tokens": 2631,
+        "total_tokens": 73095
+      },
+      "memory_hash": "a39818295ab9d584d9b358f3fb780013406d9792aeef3917929611a51c97277f",
+      "finished": "2026-09-25T19:36:25.615559+00:00"
+    },
+    {
       "condition": "remove_control",
       "rep": 9,
       "score": 0,
@@ -38,6 +309,146 @@
       },
       "memory_hash": "a39818295ab9d584d9b358f3fb780013406d9792aeef3917929611a51c97277f",
       "finished": "2026-09-25T19:25:50.597512+00:00"
+    },
+    {
+      "condition": "remove_rule",
+      "rep": 0,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 57998,
+        "completion_tokens": 1862,
+        "total_tokens": 59860
+      },
+      "memory_hash": "bfc40547ef40d234b60e7fb23ab4f5d9f1bcff7bf235b35d6aa7ceba58e772fb",
+      "finished": "2026-09-25T19:31:18.329537+00:00"
+    },
+    {
+      "condition": "remove_rule",
+      "rep": 1,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 61879,
+        "completion_tokens": 1855,
+        "total_tokens": 63734
+      },
+      "memory_hash": "bfc40547ef40d234b60e7fb23ab4f5d9f1bcff7bf235b35d6aa7ceba58e772fb",
+      "finished": "2026-09-25T19:28:12.766947+00:00"
+    },
+    {
+      "condition": "remove_rule",
+      "rep": 2,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 53248,
+        "completion_tokens": 1287,
+        "total_tokens": 54535
+      },
+      "memory_hash": "bfc40547ef40d234b60e7fb23ab4f5d9f1bcff7bf235b35d6aa7ceba58e772fb",
+      "finished": "2026-09-25T19:29:04.545684+00:00"
+    },
+    {
+      "condition": "remove_rule",
+      "rep": 3,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 54626,
+        "completion_tokens": 1518,
+        "total_tokens": 56144
+      },
+      "memory_hash": "bfc40547ef40d234b60e7fb23ab4f5d9f1bcff7bf235b35d6aa7ceba58e772fb",
+      "finished": "2026-09-25T19:44:48.700837+00:00"
+    },
+    {
+      "condition": "remove_rule",
+      "rep": 4,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 50332,
+        "completion_tokens": 1340,
+        "total_tokens": 51672
+      },
+      "memory_hash": "bfc40547ef40d234b60e7fb23ab4f5d9f1bcff7bf235b35d6aa7ceba58e772fb",
+      "finished": "2026-09-25T19:37:32.558337+00:00"
+    },
+    {
+      "condition": "remove_rule",
+      "rep": 5,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 59263,
+        "completion_tokens": 1457,
+        "total_tokens": 60720
+      },
+      "memory_hash": "bfc40547ef40d234b60e7fb23ab4f5d9f1bcff7bf235b35d6aa7ceba58e772fb",
+      "finished": "2026-09-25T19:30:05.177408+00:00"
+    },
+    {
+      "condition": "remove_rule",
+      "rep": 6,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 59671,
+        "completion_tokens": 1503,
+        "total_tokens": 61174
+      },
+      "memory_hash": "bfc40547ef40d234b60e7fb23ab4f5d9f1bcff7bf235b35d6aa7ceba58e772fb",
+      "finished": "2026-09-25T19:27:08.808937+00:00"
+    },
+    {
+      "condition": "remove_rule",
+      "rep": 7,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 60517,
+        "completion_tokens": 1507,
+        "total_tokens": 62024
+      },
+      "memory_hash": "bfc40547ef40d234b60e7fb23ab4f5d9f1bcff7bf235b35d6aa7ceba58e772fb",
+      "finished": "2026-09-25T19:45:07.147448+00:00"
+    },
+    {
+      "condition": "remove_rule",
+      "rep": 8,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 59890,
+        "completion_tokens": 1516,
+        "total_tokens": 61406
+      },
+      "memory_hash": "bfc40547ef40d234b60e7fb23ab4f5d9f1bcff7bf235b35d6aa7ceba58e772fb",
+      "finished": "2026-09-25T19:32:10.477150+00:00"
+    },
+    {
+      "condition": "remove_rule",
+      "rep": 9,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 59127,
+        "completion_tokens": 1500,
+        "total_tokens": 60627
+      },
+      "memory_hash": "bfc40547ef40d234b60e7fb23ab4f5d9f1bcff7bf235b35d6aa7ceba58e772fb",
+      "finished": "2026-09-25T19:42:22.768473+00:00"
     }
   ],
   "limitations": "Post-hoc selected orders/task. n=3 writers/cell; fixed-context ablation has n=10 independent executions/condition, not 10 memories or tasks. Repair may change semantics and costs; deletion control approximates length only."

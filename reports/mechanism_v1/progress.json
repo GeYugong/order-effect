@@ -1,9 +1,9 @@
 {
   "state": "running",
-  "stage": "ablation",
-  "updated": "2026-09-25T19:28:20.530088+00:00",
+  "stage": "ablation finished",
+  "updated": "2026-09-25T19:45:51.035589+00:00",
   "pid": 104200,
-  "ablation_tasks": 5,
+  "ablation_tasks": 30,
   "ablation_expected": 30,
   "factorial_tasks": 0,
   "factorial_expected": 240,

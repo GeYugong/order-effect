@@ -113,6 +113,6 @@ If a tool requires a code/ID instead of a human-readable name, call the appropri
 
 ## 融合过程
 
-已审计 18 个独立融合过程。规则来源的保留/消失和格式失败见 case_audit.json。来源标签消失不等于对应知识一定被遗忘；这只是一项可复查的过程指标。
+已审计 20 个独立融合过程。规则来源的保留/消失和格式失败见 case_audit.json。来源标签消失不等于对应知识一定被遗忘；这只是一项可复查的过程指标。
 
 全部保留参考条件的检索上下文是否一致：True。

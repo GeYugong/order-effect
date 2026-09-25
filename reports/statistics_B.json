@@ -1,9 +1,7 @@
 {
   "study": "B",
-  "complete_runs": 23,
-  "failed_runs": [
-    "results\\B\\merge_shuffle1_r0\\failure.json"
-  ],
+  "complete_runs": 25,
+  "failed_runs": [],
   "groups": [
     {
       "method": "canonical_all",
@@ -44,31 +42,33 @@
     {
       "method": "merge",
       "order": "reverse",
-      "n": 4,
-      "mean": 0.7666666666666667,
-      "sd": 0.047140452079103216,
+      "n": 5,
+      "mean": 0.7833333333333334,
+      "sd": 0.05527707983925669,
       "ci95": [
-        0.6916556878923807,
-        0.8416776454409527
+        0.7146977733710932,
+        0.8519688932955737
       ],
       "runs": [
         0.8333333333333334,
         0.7333333333333333,
         0.7666666666666667,
+        0.85,
         0.7333333333333333
       ]
     },
     {
       "method": "merge",
       "order": "shuffle1",
-      "n": 4,
-      "mean": 0.8458333333333332,
-      "sd": 0.034359213546813844,
+      "n": 5,
+      "mean": 0.8566666666666667,
+      "sd": 0.038369548110737804,
       "ci95": [
-        0.7911601572310678,
-        0.9005065094355986
+        0.8090245801502162,
+        0.9043087531831172
       ],
       "runs": [
+        0.9,
         0.8833333333333333,
         0.8666666666666667,
         0.8166666666666667,
@@ -96,36 +96,36 @@
   ],
   "primary": {
     "available": true,
-    "estimate": -0.005416666666666847,
+    "estimate": -1.1102230246251565e-16,
     "ci95": [
-      -0.043806471767791004,
-      0.03297313843445731
+      -0.03809074207902655,
+      0.03809074207902633
     ],
-    "p_two_sided": 0.7563133355658754,
-    "df": 8.827647963363157
+    "p_two_sided": 0.9999999999999949,
+    "df": 9.276642255984264
   },
   "exploratory_tests": {
     "merge:reverse-ordinal": {
       "available": true,
-      "estimate": -0.050000000000000044,
+      "estimate": -0.033333333333333326,
       "ci95": [
-        -0.12019313576296944,
-        0.020193135762969355
+        -0.10149013620954735,
+        0.034823469542880695
       ],
-      "p_two_sided": 0.12495471278912439,
-      "df": 4.74941451990632,
-      "p_holm": 0.24990942557824877
+      "p_two_sided": 0.27687298348543415,
+      "df": 6.030769230769228,
+      "p_holm": 0.27687298348543415
     },
     "merge:shuffle1-ordinal": {
       "available": true,
-      "estimate": 0.029166666666666452,
+      "estimate": 0.039999999999999925,
       "ci95": [
-        -0.023573403268573496,
-        0.0819067366019064
+        -0.010187715204123565,
+        0.09018771520412341
       ],
-      "p_two_sided": 0.22410611164430672,
-      "df": 5.927286942924157,
-      "p_holm": 0.24990942557824877
+      "p_two_sided": 0.1023467590768689,
+      "df": 7.429495820976002,
+      "p_holm": 0.2046935181537378
     },
     "merge:shuffle2-ordinal": {
       "available": true,
@@ -140,11 +140,11 @@
     }
   },
   "usage_complete_runs": {
-    "prompt_tokens": 81214190,
-    "completion_tokens": 4117962,
-    "total_tokens": 85332152
+    "prompt_tokens": 88326113,
+    "completion_tokens": 4501423,
+    "total_tokens": 92827536
   },
-  "transport_errors": 32,
+  "transport_errors": 49,
   "nested_evaluations": [
     {
       "method": "canonical_all",
@@ -305,6 +305,18 @@
     {
       "method": "merge",
       "order": "reverse",
+      "writer_rep": 3,
+      "evaluation_scores": [
+        0.8,
+        0.85,
+        0.9
+      ],
+      "memory_hash": "4d4d32084ebb9941e051a37b2a83049d464b5ad1a0a2799b22ec10bacbba285f",
+      "contexts_hash": "218cee91965544cc6fd23899719a20256454a22dd75c077375a3949004292380"
+    },
+    {
+      "method": "merge",
+      "order": "reverse",
       "writer_rep": 4,
       "evaluation_scores": [
         0.8,
@@ -313,6 +325,18 @@
       ],
       "memory_hash": "ae6499fbe4bd57c4e2f97db0e1a1abc804a949ebb1f0b0cf7e252976442f494c",
       "contexts_hash": "c7a4efa2354ffccd5495573871c0448b87a008a245cefc4fb060c4632bc67d3d"
+    },
+    {
+      "method": "merge",
+      "order": "shuffle1",
+      "writer_rep": 0,
+      "evaluation_scores": [
+        0.95,
+        0.85,
+        0.9
+      ],
+      "memory_hash": "347083412a75cd7c1f77eb7ef44209485b3d7aab35fb24dcfe7fff15da0ec5f4",
+      "contexts_hash": "b906a72fd4d365e13573c48e71d454c2333ee4c166eab5b729ce1560be145bc2"
     },
     {
       "method": "merge",

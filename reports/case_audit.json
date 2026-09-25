@@ -1995,6 +1995,248 @@
     },
     {
       "order": "reverse",
+      "rep": 3,
+      "invalid_updates": 2,
+      "final_source_coverage": 27,
+      "steps": [
+        {
+          "task_id": "multi_turn_base_196",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_196"
+          ],
+          "rule_count": 2
+        },
+        {
+          "task_id": "multi_turn_base_186",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_186"
+          ],
+          "rule_count": 4
+        },
+        {
+          "task_id": "multi_turn_base_179",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_179"
+          ],
+          "rule_count": 7
+        },
+        {
+          "task_id": "multi_turn_base_177",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_177"
+          ],
+          "rule_count": 8
+        },
+        {
+          "task_id": "multi_turn_base_165",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_165"
+          ],
+          "rule_count": 9
+        },
+        {
+          "task_id": "multi_turn_base_155",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_155"
+          ],
+          "rule_count": 10
+        },
+        {
+          "task_id": "multi_turn_base_150",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_150"
+          ],
+          "rule_count": 11
+        },
+        {
+          "task_id": "multi_turn_base_146",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_146"
+          ],
+          "rule_count": 11
+        },
+        {
+          "task_id": "multi_turn_base_140",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_140"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_125",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_125"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_118",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_118"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_116",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_116"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_115",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_115"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_109",
+          "lost_source_ids": [],
+          "new_source_ids": [],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_87",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_87"
+          ],
+          "rule_count": 11
+        },
+        {
+          "task_id": "multi_turn_base_77",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_77"
+          ],
+          "rule_count": 10
+        },
+        {
+          "task_id": "multi_turn_base_74",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_74"
+          ],
+          "rule_count": 11
+        },
+        {
+          "task_id": "multi_turn_base_73",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_73"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_71",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_71"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_67",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_67"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_65",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_65"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_57",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_57"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_40",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_40"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_39",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_39"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_37",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_37"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_22",
+          "lost_source_ids": [],
+          "new_source_ids": [],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_19",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_19"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_18",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_18"
+          ],
+          "rule_count": 11
+        },
+        {
+          "task_id": "multi_turn_base_15",
+          "lost_source_ids": [],
+          "new_source_ids": [],
+          "rule_count": 11
+        },
+        {
+          "task_id": "multi_turn_base_7",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_7"
+          ],
+          "rule_count": 11
+        }
+      ]
+    },
+    {
+      "order": "reverse",
       "rep": 4,
       "invalid_updates": 2,
       "final_source_coverage": 27,
@@ -2230,6 +2472,244 @@
           "lost_source_ids": [],
           "new_source_ids": [
             "multi_turn_base_7"
+          ],
+          "rule_count": 12
+        }
+      ]
+    },
+    {
+      "order": "shuffle1",
+      "rep": 0,
+      "invalid_updates": 4,
+      "final_source_coverage": 25,
+      "steps": [
+        {
+          "task_id": "multi_turn_base_67",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_67"
+          ],
+          "rule_count": 3
+        },
+        {
+          "task_id": "multi_turn_base_146",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_146"
+          ],
+          "rule_count": 6
+        },
+        {
+          "task_id": "multi_turn_base_22",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_22"
+          ],
+          "rule_count": 9
+        },
+        {
+          "task_id": "multi_turn_base_196",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_196"
+          ],
+          "rule_count": 11
+        },
+        {
+          "task_id": "multi_turn_base_87",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_87"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_19",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_19"
+          ],
+          "rule_count": 9
+        },
+        {
+          "task_id": "multi_turn_base_73",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_73"
+          ],
+          "rule_count": 9
+        },
+        {
+          "task_id": "multi_turn_base_116",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_116"
+          ],
+          "rule_count": 9
+        },
+        {
+          "task_id": "multi_turn_base_7",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_7"
+          ],
+          "rule_count": 10
+        },
+        {
+          "task_id": "multi_turn_base_40",
+          "lost_source_ids": [],
+          "new_source_ids": [],
+          "rule_count": 10
+        },
+        {
+          "task_id": "multi_turn_base_57",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_57"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_115",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_115"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_18",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_18"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_177",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_177"
+          ],
+          "rule_count": 11
+        },
+        {
+          "task_id": "multi_turn_base_155",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_155"
+          ],
+          "rule_count": 10
+        },
+        {
+          "task_id": "multi_turn_base_39",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_39"
+          ],
+          "rule_count": 10
+        },
+        {
+          "task_id": "multi_turn_base_118",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_118"
+          ],
+          "rule_count": 10
+        },
+        {
+          "task_id": "multi_turn_base_71",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_71"
+          ],
+          "rule_count": 10
+        },
+        {
+          "task_id": "multi_turn_base_165",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_165"
+          ],
+          "rule_count": 11
+        },
+        {
+          "task_id": "multi_turn_base_65",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_65"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_150",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_150"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_179",
+          "lost_source_ids": [],
+          "new_source_ids": [],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_140",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_140"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_37",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_37"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_77",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_77"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_109",
+          "lost_source_ids": [],
+          "new_source_ids": [],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_74",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_74"
+          ],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_15",
+          "lost_source_ids": [],
+          "new_source_ids": [],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_186",
+          "lost_source_ids": [],
+          "new_source_ids": [],
+          "rule_count": 12
+        },
+        {
+          "task_id": "multi_turn_base_125",
+          "lost_source_ids": [],
+          "new_source_ids": [
+            "multi_turn_base_125"
           ],
           "rule_count": 12
         }
@@ -4388,8 +4868,8 @@
   ],
   "canonical_contexts_identical": true,
   "source_jaccard_descriptive": {
-    "within_order": 0.8044114282907386,
-    "between_orders": 0.7823909516699487
+    "within_order": 0.8144035268690442,
+    "between_orders": 0.7819576251760161
   },
   "limitation": "A source-ID disappearing is not proof that its semantic content was forgotten; pairs share memories and are not independent samples."
 }

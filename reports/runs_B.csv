@@ -12,7 +12,9 @@ merge,ordinal,4,DeepSeek-V4-Flash-0731-W8A8,,0.8666666666666667,3758685
 merge,reverse,0,DeepSeek-V4-Flash-0731-W8A8,,0.8333333333333334,3783770
 merge,reverse,1,DeepSeek-V4-Flash-0731-W8A8,,0.7333333333333333,3871603
 merge,reverse,2,DeepSeek-V4-Flash-0731-W8A8,,0.7666666666666667,4030272
+merge,reverse,3,DeepSeek-V4-Flash-0731-W8A8,,0.85,3595516
 merge,reverse,4,DeepSeek-V4-Flash-0731-W8A8,,0.7333333333333333,3756719
+merge,shuffle1,0,DeepSeek-V4-Flash-0731-W8A8,,0.9,3899868
 merge,shuffle1,1,DeepSeek-V4-Flash-0731-W8A8,,0.8833333333333333,3674630
 merge,shuffle1,2,DeepSeek-V4-Flash-0731-W8A8,,0.8666666666666667,4126192
 merge,shuffle1,3,DeepSeek-V4-Flash-0731-W8A8,,0.8166666666666667,3989126

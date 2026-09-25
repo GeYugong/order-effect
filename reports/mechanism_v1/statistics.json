@@ -1,13 +1,44 @@
 {
   "status": "incomplete",
   "factorial_runs": 0,
-  "ablation_runs": 0,
+  "ablation_runs": 2,
   "factorial_primary": {
     "available": false,
     "reason": "Wait for all 12 writer runs; no interim testing"
   },
+  "factorial_order_gaps_descriptive": {},
   "ablation_fisher_holm": {},
+  "ablation_interpretation": "规则消融尚未全部完成，不作推断。",
   "factorial_rows": [],
-  "ablation_rows": [],
+  "ablation_rows": [
+    {
+      "condition": "original",
+      "rep": 7,
+      "score": 1,
+      "booking_called": true,
+      "booking_on_requested_turn": true,
+      "usage": {
+        "prompt_tokens": 59898,
+        "completion_tokens": 2158,
+        "total_tokens": 62056
+      },
+      "memory_hash": "747b521168d2ebef39ec604c0619546cbb2659d8a443ddb1c2484b984de7e7bd",
+      "finished": "2026-09-25T19:26:16.770993+00:00"
+    },
+    {
+      "condition": "remove_control",
+      "rep": 9,
+      "score": 0,
+      "booking_called": false,
+      "booking_on_requested_turn": false,
+      "usage": {
+        "prompt_tokens": 48457,
+        "completion_tokens": 1830,
+        "total_tokens": 50287
+      },
+      "memory_hash": "a39818295ab9d584d9b358f3fb780013406d9792aeef3917929611a51c97277f",
+      "finished": "2026-09-25T19:25:50.597512+00:00"
+    }
+  ],
   "limitations": "Post-hoc selected orders/task. n=3 writers/cell; fixed-context ablation has n=10 independent executions/condition, not 10 memories or tasks. Repair may change semantics and costs; deletion control approximates length only."
 }

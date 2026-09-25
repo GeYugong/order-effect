@@ -1,0 +1,426 @@
+{
+  "study": "B",
+  "complete_runs": 23,
+  "failed_runs": [
+    "results\\B\\merge_shuffle1_r0\\failure.json"
+  ],
+  "groups": [
+    {
+      "method": "canonical_all",
+      "order": "canonical",
+      "n": 5,
+      "mean": 0.8400000000000001,
+      "sd": 0.04183300132670376,
+      "ci95": [
+        0.7880574683158216,
+        0.8919425316841786
+      ],
+      "runs": [
+        0.85,
+        0.9,
+        0.8,
+        0.85,
+        0.8
+      ]
+    },
+    {
+      "method": "merge",
+      "order": "ordinal",
+      "n": 5,
+      "mean": 0.8166666666666668,
+      "sd": 0.028867513459481284,
+      "ci95": [
+        0.7808229144863662,
+        0.8525104188469673
+      ],
+      "runs": [
+        0.8,
+        0.8166666666666667,
+        0.8,
+        0.8,
+        0.8666666666666667
+      ]
+    },
+    {
+      "method": "merge",
+      "order": "reverse",
+      "n": 4,
+      "mean": 0.7666666666666667,
+      "sd": 0.047140452079103216,
+      "ci95": [
+        0.6916556878923807,
+        0.8416776454409527
+      ],
+      "runs": [
+        0.8333333333333334,
+        0.7333333333333333,
+        0.7666666666666667,
+        0.7333333333333333
+      ]
+    },
+    {
+      "method": "merge",
+      "order": "shuffle1",
+      "n": 4,
+      "mean": 0.8458333333333332,
+      "sd": 0.034359213546813844,
+      "ci95": [
+        0.7911601572310678,
+        0.9005065094355986
+      ],
+      "runs": [
+        0.8833333333333333,
+        0.8666666666666667,
+        0.8166666666666667,
+        0.8166666666666667
+      ]
+    },
+    {
+      "method": "merge",
+      "order": "shuffle2",
+      "n": 5,
+      "mean": 0.7766666666666666,
+      "sd": 0.030276503540974924,
+      "ci95": [
+        0.7390734222283492,
+        0.8142599111049841
+      ],
+      "runs": [
+        0.7666666666666667,
+        0.7333333333333333,
+        0.7833333333333333,
+        0.7833333333333333,
+        0.8166666666666667
+      ]
+    }
+  ],
+  "primary": {
+    "available": true,
+    "estimate": -0.005416666666666847,
+    "ci95": [
+      -0.043806471767791004,
+      0.03297313843445731
+    ],
+    "p_two_sided": 0.7563133355658754,
+    "df": 8.827647963363157
+  },
+  "exploratory_tests": {
+    "merge:reverse-ordinal": {
+      "available": true,
+      "estimate": -0.050000000000000044,
+      "ci95": [
+        -0.12019313576296944,
+        0.020193135762969355
+      ],
+      "p_two_sided": 0.12495471278912439,
+      "df": 4.74941451990632,
+      "p_holm": 0.24990942557824877
+    },
+    "merge:shuffle1-ordinal": {
+      "available": true,
+      "estimate": 0.029166666666666452,
+      "ci95": [
+        -0.023573403268573496,
+        0.0819067366019064
+      ],
+      "p_two_sided": 0.22410611164430672,
+      "df": 5.927286942924157,
+      "p_holm": 0.24990942557824877
+    },
+    "merge:shuffle2-ordinal": {
+      "available": true,
+      "estimate": -0.04000000000000015,
+      "ci95": [
+        -0.08315842094125522,
+        0.0031584209412549302
+      ],
+      "p_two_sided": 0.06504630096323383,
+      "df": 7.981900452488689,
+      "p_holm": 0.19513890288970148
+    }
+  },
+  "usage_complete_runs": {
+    "prompt_tokens": 81214190,
+    "completion_tokens": 4117962,
+    "total_tokens": 85332152
+  },
+  "transport_errors": 32,
+  "nested_evaluations": [
+    {
+      "method": "canonical_all",
+      "order": "canonical",
+      "writer_rep": 0,
+      "evaluation_scores": [
+        0.95,
+        0.7,
+        0.9
+      ],
+      "memory_hash": "bab501ab0e58706c01040877cc47c7b21888074507c13baec91cc2059e033f65",
+      "contexts_hash": "3f730dc28a842613666dae266fe53e77ddda7521dea48db5c5a026433b1d05dc"
+    },
+    {
+      "method": "canonical_all",
+      "order": "canonical",
+      "writer_rep": 1,
+      "evaluation_scores": [
+        0.85,
+        0.9,
+        0.95
+      ],
+      "memory_hash": "bab501ab0e58706c01040877cc47c7b21888074507c13baec91cc2059e033f65",
+      "contexts_hash": "3f730dc28a842613666dae266fe53e77ddda7521dea48db5c5a026433b1d05dc"
+    },
+    {
+      "method": "canonical_all",
+      "order": "canonical",
+      "writer_rep": 2,
+      "evaluation_scores": [
+        0.75,
+        0.8,
+        0.85
+      ],
+      "memory_hash": "bab501ab0e58706c01040877cc47c7b21888074507c13baec91cc2059e033f65",
+      "contexts_hash": "3f730dc28a842613666dae266fe53e77ddda7521dea48db5c5a026433b1d05dc"
+    },
+    {
+      "method": "canonical_all",
+      "order": "canonical",
+      "writer_rep": 3,
+      "evaluation_scores": [
+        0.85,
+        0.9,
+        0.8
+      ],
+      "memory_hash": "bab501ab0e58706c01040877cc47c7b21888074507c13baec91cc2059e033f65",
+      "contexts_hash": "3f730dc28a842613666dae266fe53e77ddda7521dea48db5c5a026433b1d05dc"
+    },
+    {
+      "method": "canonical_all",
+      "order": "canonical",
+      "writer_rep": 4,
+      "evaluation_scores": [
+        0.8,
+        0.7,
+        0.9
+      ],
+      "memory_hash": "bab501ab0e58706c01040877cc47c7b21888074507c13baec91cc2059e033f65",
+      "contexts_hash": "3f730dc28a842613666dae266fe53e77ddda7521dea48db5c5a026433b1d05dc"
+    },
+    {
+      "method": "merge",
+      "order": "ordinal",
+      "writer_rep": 0,
+      "evaluation_scores": [
+        0.8,
+        0.8,
+        0.8
+      ],
+      "memory_hash": "0a4826119e2949b5cd0091f6cf21e5a70b9fabd063a04daac90ea29999890e96",
+      "contexts_hash": "6f9909c671433cef5de1b4cc57d3d267155c52ffdf87ba9abc68a5f5d377e268"
+    },
+    {
+      "method": "merge",
+      "order": "ordinal",
+      "writer_rep": 1,
+      "evaluation_scores": [
+        0.75,
+        0.9,
+        0.8
+      ],
+      "memory_hash": "35bb67e30be1389b4495dbd2d2d89b7514f9dca0482078e857222b89668e5328",
+      "contexts_hash": "ff1e26241ff3ce4cb19eae3455fd3b9d4d42d6da122592de3eb70f8785b2e252"
+    },
+    {
+      "method": "merge",
+      "order": "ordinal",
+      "writer_rep": 2,
+      "evaluation_scores": [
+        0.9,
+        0.75,
+        0.75
+      ],
+      "memory_hash": "0aadeefce024fdd681126bdc5c30b29e133decbc98b510759857089a65993af3",
+      "contexts_hash": "6b10acff98a21028973e74e16a9b33763ee4b76ff40c72781cf5ce10883213b9"
+    },
+    {
+      "method": "merge",
+      "order": "ordinal",
+      "writer_rep": 3,
+      "evaluation_scores": [
+        0.85,
+        0.85,
+        0.7
+      ],
+      "memory_hash": "a0b3c881e2fbb6d0a07d702b019252e4ffda67c650802b8e88d197747916d928",
+      "contexts_hash": "b4a753a294c32d38bdc694538f565895e1fe6bbd4a35a7c83403c86fc7e646d7"
+    },
+    {
+      "method": "merge",
+      "order": "ordinal",
+      "writer_rep": 4,
+      "evaluation_scores": [
+        0.9,
+        0.85,
+        0.85
+      ],
+      "memory_hash": "6592be20e4198d2e5215483dc26154c4d6c1d579fc53bf355678e373f75f6b52",
+      "contexts_hash": "59d0d28fcbc684fa91223709e3b3e7d1a226f32759a8348fb05d7670739c21b7"
+    },
+    {
+      "method": "merge",
+      "order": "reverse",
+      "writer_rep": 0,
+      "evaluation_scores": [
+        0.8,
+        0.9,
+        0.8
+      ],
+      "memory_hash": "9780c6d149fb3b9277b894d258e8f70b6fb47634c6673120b2cf6573af321045",
+      "contexts_hash": "5203a5bf563c24dfb099a015bf969932a85b1721ccedcf11f3a8a4bc0976be6d"
+    },
+    {
+      "method": "merge",
+      "order": "reverse",
+      "writer_rep": 1,
+      "evaluation_scores": [
+        0.7,
+        0.75,
+        0.75
+      ],
+      "memory_hash": "9fba61f1b3d5288cf77d2978e627e75b484bf9f9860f65d0ab299f4f300372b7",
+      "contexts_hash": "9a138017bab3ec8cb45d039ba5544a94fae5ea7b3d4b48ecb0de201b6cd7bb60"
+    },
+    {
+      "method": "merge",
+      "order": "reverse",
+      "writer_rep": 2,
+      "evaluation_scores": [
+        0.8,
+        0.65,
+        0.85
+      ],
+      "memory_hash": "9add5b9f99f73dd868eb4f03a115bfe2416dc6c42a8dc6485e030262755f6c14",
+      "contexts_hash": "36768eb84b0a6b1d3c3a77eda57f772af9d5ffde7311018b63ecd6e50699cc30"
+    },
+    {
+      "method": "merge",
+      "order": "reverse",
+      "writer_rep": 4,
+      "evaluation_scores": [
+        0.8,
+        0.65,
+        0.75
+      ],
+      "memory_hash": "ae6499fbe4bd57c4e2f97db0e1a1abc804a949ebb1f0b0cf7e252976442f494c",
+      "contexts_hash": "c7a4efa2354ffccd5495573871c0448b87a008a245cefc4fb060c4632bc67d3d"
+    },
+    {
+      "method": "merge",
+      "order": "shuffle1",
+      "writer_rep": 1,
+      "evaluation_scores": [
+        0.9,
+        0.9,
+        0.85
+      ],
+      "memory_hash": "862080a118ab166d04cdb5b739ef38918557e8c05a6b7f4848ba0b88e2a33ee7",
+      "contexts_hash": "368e15b32669cc8fc9383006e8e4b6f51bcb2c2664d48a15bc09da2c48cd8d73"
+    },
+    {
+      "method": "merge",
+      "order": "shuffle1",
+      "writer_rep": 2,
+      "evaluation_scores": [
+        0.9,
+        0.85,
+        0.85
+      ],
+      "memory_hash": "f33cfe45d687e3bb0f70202f7478a5631cfd4c8f76ce5e4f185b84c9166303ae",
+      "contexts_hash": "5c70e4793fcd7ba0d4408c714e03caf5e374fa0d7d2a84f92548c42075476973"
+    },
+    {
+      "method": "merge",
+      "order": "shuffle1",
+      "writer_rep": 3,
+      "evaluation_scores": [
+        0.8,
+        0.8,
+        0.85
+      ],
+      "memory_hash": "225de53a659ed7fc31c4596dc019747885d18ef143ab0babeac14f775e22df3e",
+      "contexts_hash": "1a15d4636d10ebe218f0ae8bdf22eb220e82f66dc045937192fa2a2be7cf34e3"
+    },
+    {
+      "method": "merge",
+      "order": "shuffle1",
+      "writer_rep": 4,
+      "evaluation_scores": [
+        0.8,
+        0.85,
+        0.8
+      ],
+      "memory_hash": "71043981c75c37e1b832a822f8445b1ae834e67e9e77a3a31478ab2b342434f7",
+      "contexts_hash": "9ce2b0a692235d06761d4880de796791037cc0870768d031d67e9d57b33ce5cf"
+    },
+    {
+      "method": "merge",
+      "order": "shuffle2",
+      "writer_rep": 0,
+      "evaluation_scores": [
+        0.8,
+        0.85,
+        0.65
+      ],
+      "memory_hash": "162a6e4793882509da3ae28b53bd73256ff735908bf27c7fa1225e950a2c9903",
+      "contexts_hash": "62d16bb262aa4409ae96e84141054a13c6c5102ca213daedeb8d709762b10cd8"
+    },
+    {
+      "method": "merge",
+      "order": "shuffle2",
+      "writer_rep": 1,
+      "evaluation_scores": [
+        0.6,
+        0.8,
+        0.8
+      ],
+      "memory_hash": "17c99b2175f375e1e5c39374bfed5d02d4949c8615cbe141dac0d5773763250f",
+      "contexts_hash": "921ee3a5b37aaaf722bce74863758ec78e6dea4ef4a7b7dcae81bdab6319252d"
+    },
+    {
+      "method": "merge",
+      "order": "shuffle2",
+      "writer_rep": 2,
+      "evaluation_scores": [
+        0.7,
+        0.8,
+        0.85
+      ],
+      "memory_hash": "747b521168d2ebef39ec604c0619546cbb2659d8a443ddb1c2484b984de7e7bd",
+      "contexts_hash": "21a6a936bdfaab3e5bdd8b175fb93f5fc6ed47b0aa422b580f99dc060cc9f8fb"
+    },
+    {
+      "method": "merge",
+      "order": "shuffle2",
+      "writer_rep": 3,
+      "evaluation_scores": [
+        0.95,
+        0.65,
+        0.75
+      ],
+      "memory_hash": "381d74876012a6a10948a4fa2e219521d9a2c0581adb7d4f853ba213d6ab00c3",
+      "contexts_hash": "4e16aacb56983776bc033c861f3f7e560c26988f44509f44d83aee6b79954e9c"
+    },
+    {
+      "method": "merge",
+      "order": "shuffle2",
+      "writer_rep": 4,
+      "evaluation_scores": [
+        0.9,
+        0.75,
+        0.8
+      ],
+      "memory_hash": "4be7bd621f39533f0c1e27b5e4f7ff6b8a5d155be070464bc6b0205db5afc0db",
+      "contexts_hash": "0a1d777dee0d995c394b3e791c77cfdee63524050acf31829f1dce245bee9833"
+    }
+  ]
+}

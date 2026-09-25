@@ -110,3 +110,9 @@ When a tool expects a standardized identifier (like ZIP) but the user provides a
 If a tool requires a code/ID instead of a human-readable name, call the appropriate lookup tool for each entity first. These lookups are independent, so issue them concurrently to reduce latency. Only after obtaining all IDs should you call the dependent tool with the correct parameters. This avoids argument errors and keeps the interaction efficient.
 ```
 
+
+## 融合过程
+
+已审计 18 个独立融合过程。规则来源的保留/消失和格式失败见 case_audit.json。来源标签消失不等于对应知识一定被遗忘；这只是一项可复查的过程指标。
+
+全部保留参考条件的检索上下文是否一致：True。

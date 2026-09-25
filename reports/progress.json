@@ -1,8 +1,8 @@
 {
   "state": "running",
   "stage": "A finished",
-  "updated": "2026-09-23T23:12:48.226690+00:00",
-  "pid": 55920,
+  "updated": "2026-09-25T15:06:12.590352+00:00",
+  "pid": 75204,
   "model": "DeepSeek-V4-Flash-0731-W8A8",
   "studies": {
     "A": {
@@ -13,11 +13,11 @@
       "runs_with_prior_failure": 0
     },
     "B": {
-      "complete_runs": 0,
+      "complete_runs": 23,
       "expected_runs": 25,
-      "completed_tasks": 0,
+      "completed_tasks": 1422,
       "expected_tasks": 1500,
-      "runs_with_prior_failure": 0
+      "runs_with_prior_failure": 1
     }
   }
 }

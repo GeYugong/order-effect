@@ -1,0 +1,13 @@
+{
+  "status": "incomplete",
+  "factorial_runs": 0,
+  "ablation_runs": 0,
+  "factorial_primary": {
+    "available": false,
+    "reason": "Wait for all 12 writer runs; no interim testing"
+  },
+  "ablation_fisher_holm": {},
+  "factorial_rows": [],
+  "ablation_rows": [],
+  "limitations": "Post-hoc selected orders/task. n=3 writers/cell; fixed-context ablation has n=10 independent executions/condition, not 10 memories or tasks. Repair may change semantics and costs; deletion control approximates length only."
+}

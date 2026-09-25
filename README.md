@@ -4,6 +4,17 @@
 
 本项目是 BFCL 多轮工具环境上的迁移研究，不是 Fragility / ReasoningBank 原论文分数复现。实际完成情况见 `reports/`，实验设计见 [PROTOCOL.md](PROTOCOL.md)。
 
+## 机制跟进（2026-09-26）
+
+原 A/B 已完成，共3500次任务。新一轮分别检验超长规则的一次修复策略和旅行案例的单条规则删除，共270次新任务，独立保存结果。它是根据旧数据提出的机制筛查，不改写原主要检验。
+
+- [给老师的一页汇报](reports/mechanism_v1/TEACHER_BRIEF.md)
+- [离线案例诊断](reports/mechanism_v1/OFFLINE_AUDIT.md)
+- [新实验固定方案](reports/mechanism_v1/PROTOCOL.md)
+- [新实验状态](reports/mechanism_v1/STATUS.md) / [结果](reports/mechanism_v1/RESULTS.md)
+
+新实验执行或恢复：`.venv/Scripts/python.exe mechanism_pipeline.py --workers 2`。恢复使用原检查点；不要再次调用 `mechanism.py prepare` 覆盖方案。状态与日志在 `reports/mechanism_v1/`、`results/mechanism_v1/`；停止标记为 `results/mechanism_v1/STOP`。
+
 ## 环境与启动
 
 Python 3.11。仅调用校园端点 http://aigw.dlut.edu.cn/v1，密钥从本机 `DLUT_API_KEY` 环境变量读取；Windows 可读取当前用户环境变量。代码禁止调用官方付费 DeepSeek API，无自动回退。不要把密钥写入 Git。

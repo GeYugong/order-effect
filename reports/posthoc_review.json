@@ -1,0 +1,110 @@
+{
+  "analysis_status": "post-hoc, after seeing all results; original primary analyses unchanged",
+  "B_pairwise_family": "All six unordered comparisons among four merge orders; two-sided Welch tests; Holm over six tests",
+  "unit": "One independently generated playbook, averaging its three evaluations; n=5 per merge order",
+  "B_all_pairwise_tests": {
+    "ordinal - reverse": {
+      "available": true,
+      "estimate": 0.033333333333333326,
+      "ci95": [
+        -0.034823469542880695,
+        0.10149013620954735
+      ],
+      "p_two_sided": 0.27687298348543415,
+      "df": 6.030769230769228,
+      "p_holm": 0.5537459669708683
+    },
+    "ordinal - shuffle1": {
+      "available": true,
+      "estimate": -0.039999999999999925,
+      "ci95": [
+        -0.09018771520412341,
+        0.010187715204123565
+      ],
+      "p_two_sided": 0.1023467590768689,
+      "df": 7.429495820976002,
+      "p_holm": 0.3070402772306067
+    },
+    "ordinal - shuffle2": {
+      "available": true,
+      "estimate": 0.04000000000000015,
+      "ci95": [
+        -0.0031584209412549302,
+        0.08315842094125522
+      ],
+      "p_two_sided": 0.06504630096323383,
+      "df": 7.981900452488689,
+      "p_holm": 0.2601852038529353
+    },
+    "reverse - shuffle1": {
+      "available": true,
+      "estimate": -0.07333333333333325,
+      "ci95": [
+        -0.1442318401581652,
+        -0.0024348265085013115
+      ],
+      "p_two_sided": 0.044350541063300164,
+      "df": 7.128311757998523,
+      "p_holm": 0.22175270531650082
+    },
+    "reverse - shuffle2": {
+      "available": true,
+      "estimate": 0.006666666666666821,
+      "ci95": [
+        -0.06176127950931856,
+        0.0750946128426522
+      ],
+      "p_two_sided": 0.8206445644908232,
+      "df": 6.20183486238532,
+      "p_holm": 0.8206445644908232
+    },
+    "shuffle1 - shuffle2": {
+      "available": true,
+      "estimate": 0.08000000000000007,
+      "ci95": [
+        0.029116591176775432,
+        0.13088340882322472
+      ],
+      "p_two_sided": 0.007011278923939993,
+      "df": 7.589533093894307,
+      "p_holm": 0.04206767354363996
+    }
+  },
+  "ci_note": "Each ci95 is an unadjusted per-comparison interval, not a simultaneous confidence interval",
+  "A_equal_order_weighted_means_descriptive": {
+    "no_memory": 0.825,
+    "reasoning_memory": 0.7950000000000002
+  },
+  "canonical_fixed_context_repeats": [
+    0.95,
+    0.7,
+    0.9,
+    0.85,
+    0.9,
+    0.95,
+    0.75,
+    0.8,
+    0.85,
+    0.85,
+    0.9,
+    0.8,
+    0.8,
+    0.7,
+    0.9
+  ],
+  "merge_steps": 600,
+  "invalid_merge_updates": {
+    "Playbook rule exceeds word budget": 56,
+    "Invalid playbook provenance": 1,
+    "Invalid playbook rule count": 1,
+    "Expecting ',' delimiter: line 1 column 870 (char 869)": 1
+  },
+  "steps_losing_source_labels": 1,
+  "limitations": [
+    "Post-hoc family selection does not replace independent confirmation or the prespecified primary contrast.",
+    "Small samples and discrete scores limit parametric inference.",
+    "All conclusions conditional on one fixed experience pool and heldout set; not all possible permutations.",
+    "Source tags are model-generated; loss or retention does not establish semantic forgetting or preservation.",
+    "Invalid-update skip policy is part of the tested algorithm; mechanism cannot be isolated from it."
+  ]
+}

@@ -1,13 +1,19 @@
 # 机制实验结果
 
-状态：incomplete；融合运行 0/12；规则消融执行 30/30。
+状态：complete；融合运行 12/12；规则消融执行 30/30。
 
 ## 一次长度修复 × 两种顺序
 
 | 策略 | 顺序 | 独立 writer 数 | 成功率 | 候选更新不合规 | 修复通过 | 最终跳过 |
 |---|---|---:|---:|---:|---:|---:|
+| repair_length_once | shuffle1 | 3 | 75.0% | 14 | 14 | 0 |
+| repair_length_once | shuffle2 | 3 | 81.7% | 12 | 10 | 2 |
+| skip_baseline | shuffle1 | 3 | 83.3% | 8 | 0 | 8 |
+| skip_baseline | shuffle2 | 3 | 78.3% | 6 | 0 | 6 |
 
-Wait for all 12 writer runs; no interim testing
+修复前后顺序差值的变化：-11.67 个百分点，95% CI [-29.64, +6.31]，p=0.1695。
+
+区间跨零，未可靠区分交互差值与 writer/执行波动。
 
 ## 单条规则删除消融
 

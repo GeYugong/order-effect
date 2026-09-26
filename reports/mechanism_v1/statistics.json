@@ -12,6 +12,10 @@
     "p_two_sided": 0.16946092373798868,
     "df": 7.170731707317074
   },
+  "factorial_order_gaps_descriptive": {
+    "skip_baseline": 0.050000000000000155,
+    "repair_length_once": -0.06666666666666676
+  },
   "ablation_fisher_holm": {
     "original": {
       "available": true,
@@ -34,6 +38,7 @@
       "p_holm": 0.17337461300309598
     }
   },
+  "ablation_interpretation": "尚未获得相对于两种对照均可靠的改善证据；每条件仅10次执行，阴性或混合结果不能证明该规则没有影响。",
   "factorial_rows": [
     {
       "policy": "repair_length_once",
